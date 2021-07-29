@@ -1,12 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import Chart from "react-apexcharts";
+import ApexChart from "react-apexcharts";
 import React, { useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
+import { CryptoXor } from "crypto-xor";
 
-import { FormValues, GraphState, ItemData, Series } from "../types";
+import { FormValues, ChartState, ItemData, Series } from "../types";
+import { fetchWithErrorCheck } from "../utils";
 
-class Graph extends React.Component<FormValues, GraphState> {
-  state: GraphState = {
+class Chart extends React.Component<FormValues, ChartState> {
+  state: ChartState = {
     itemData: {},
 
     seriesDeals: [],
@@ -100,18 +102,21 @@ class Graph extends React.Component<FormValues, GraphState> {
   };
 
   fetchData = async () => {
-    const requestParams = {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    };
+    const response = await fetchWithErrorCheck(
+      `/api/chart/${this.props.id}`,
+      this.props.setIsLogged,
+      false,
+      true
+    );
 
-    const response = await fetch(`/api/graph/${this.props.id}`, requestParams);
-
-    if (response.status === 401) return <Redirect push to="/login" />;
+    if (response === 1) return <Redirect push to="/login" />;
 
     let data = await response.json();
+
+    data = CryptoXor.decrypt(data.data, "testPass");
+    data = JSON.parse(data);
+
     const startDate = data.startDate;
-    data = data.data;
 
     if (startDate) {
       this.setState({
@@ -163,8 +168,6 @@ class Graph extends React.Component<FormValues, GraphState> {
         steamConcurrentInGame: steamConcurrentInGame,
       },
     });
-
-    console.log(priceRub);
   };
 
   updateDealsSeries = () => {
@@ -274,8 +277,11 @@ class Graph extends React.Component<FormValues, GraphState> {
 
   async componentDidMount() {
     await this.fetchData();
-    this.updateDealsSeries();
-    this.updateUsersSerier();
+
+    if (this.props.isLogged) {
+      this.updateDealsSeries();
+      this.updateUsersSerier();
+    }
   }
 
   async componentDidUpdate(prevProps: { formData: FormValues; id: number }) {
@@ -296,13 +302,13 @@ class Graph extends React.Component<FormValues, GraphState> {
   render() {
     return (
       <div>
-        <Chart
+        <ApexChart
           options={this.state.optionsDeals}
           series={this.state.seriesDeals}
         />
 
         {this.props.formData.online === "none" ? null : (
-          <Chart
+          <ApexChart
             options={this.state.optionsUsers}
             series={this.state.seriesUsers}
           />
@@ -312,4 +318,4 @@ class Graph extends React.Component<FormValues, GraphState> {
   }
 }
 
-export default Graph;
+export default Chart;

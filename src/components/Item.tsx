@@ -3,10 +3,18 @@ import { useHistory, useLocation, useParams } from "react-router-dom";
 
 import { FormValues, ItemType } from "../types";
 
-import Graph from "./Graph";
+import Chart from "./Chart";
 import ItemForm from "./ItemForm";
 
-const Item = ({ itemList }: { itemList: ItemType[] }) => {
+const Item = ({
+  itemList,
+  isLogged,
+  setIsLogged,
+}: {
+  itemList: ItemType[];
+  isLogged: boolean;
+  setIsLogged: any;
+}) => {
   // id from url
   const { id } = useParams<{ id: string }>();
   const [itemData, setItemData] = useState<ItemType | undefined>();
@@ -64,7 +72,7 @@ const Item = ({ itemList }: { itemList: ItemType[] }) => {
         {itemData?.marketName ? `| ${itemData?.marketName}` : null}
       </h3>
       <ItemForm formData={formData} setFormData={setFormData} />
-      <Graph formData={formData} id={id} />
+      <Chart isLogged={isLogged} setIsLogged={setIsLogged} formData={formData} id={id} />
     </div>
   );
 };

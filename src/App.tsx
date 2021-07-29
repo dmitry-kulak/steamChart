@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import Searchbar from "./components/Searchbar";
 import { ItemType } from "./types";
 import Item from "./components/Item";
 import Login from "./components/Login";
+import { fetchWithErrorCheck } from "./utils";
 import "./App.css";
 
 const App = () => {
@@ -19,8 +14,7 @@ const App = () => {
 
   useEffect(() => {
     const fetchProfile = async () => {
-      const response = await fetch("/api/profile");
-      response.status === 401 ? setIsLogged(false) : setIsLogged(true);
+      fetchWithErrorCheck("/api/profile", setIsLogged);
     };
 
     fetchProfile();
@@ -56,7 +50,7 @@ const App = () => {
           <Route
             exact
             path="/item/:id"
-            render={(props) => <Item itemList={itemList as ItemType[]} />}
+            render={(props) => <Item isLogged={isLogged} setIsLogged={setIsLogged} itemList={itemList as ItemType[]} />}
           />
           <Route
             exact

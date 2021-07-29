@@ -16,6 +16,7 @@
     "@types/react-router-dom": "^5.1.8",
     "apexcharts": "^3.27.2",
     "axios": "^0.21.1",
+    "crypto-xor": "^2.1.0",
     "http-proxy-middleware": "^2.0.1",
     "js-cookie": "^3.0.0",
     "react": "^17.0.2",

@@ -34,7 +34,7 @@ export interface Series {
   type: string;
 }
 
-export interface GraphState {
+export interface ChartState {
   itemData: ItemData;
   seriesDeals: Series[],
   seriesUsers: Series[],
