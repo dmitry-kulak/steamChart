@@ -113,10 +113,13 @@ class Chart extends React.Component<FormValues, ChartState> {
 
     let data = await response.json();
 
+    const startDate = data.startDate;
+
     data = CryptoXor.decrypt(data.data, "testPass");
     data = JSON.parse(data);
+    console.log(data)
 
-    const startDate = data.startDate;
+    console.log(startDate)
 
     if (startDate) {
       this.setState({
