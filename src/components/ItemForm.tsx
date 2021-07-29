@@ -89,8 +89,8 @@ const ItemForm = ({
         <input
           type="radio"
           name="online"
-          value="twitchConcurrentViewers"
-          checked={formData.online === "twitchConcurrentViewers"}
+          value="gameConcurrentTwitchViewers"
+          checked={formData.online === "gameConcurrentTwitchViewers"}
           onChange={(e) => handleRadioChange(e, "online")}
         />
         Количество зрителей в Twitch (CS:GO)

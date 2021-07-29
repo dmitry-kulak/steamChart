@@ -1,0 +1,6 @@
+.App-Searchbar{
+  width: 400px;
+  display: flex;
+  position: fixed;
+  padding-top: 10px;
+}

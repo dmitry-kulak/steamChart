@@ -18,13 +18,13 @@ export interface ItemData {
   priceRub?: number[];
   priceUsd?: number[];
   dealsQty?: number[];
-  buyQtyRub?: number[];
-  buyQtyUsd?: number[];
-  sellQtyRub?: number[];
-  sellQtyUsd?: number[];
+  ordersRub?: number[];
+  ordersUsd?: number[];
+  lotsRub?: number[];
+  lotsUsd?: number[];
   gameConcurrentInGame?: number[];
   steamConcurrentOnline?: number[];
-  twitchConcurrentViewers?: number[];
+  gameConcurrentTwitchViewers?: number[];
   steamConcurrentInGame?: number[];
 }
 
@@ -36,6 +36,8 @@ export interface Series {
 
 export interface GraphState {
   itemData: ItemData;
-  series: Series[];
-  options: any;
+  seriesDeals: Series[],
+  seriesUsers: Series[],
+  optionsDeals: any;
+  optionsUsers: any;
 }

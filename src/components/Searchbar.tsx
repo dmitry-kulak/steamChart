@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { ItemType } from "../types";
+import { Link, Redirect } from "react-router-dom";
 
-const Searchbar = ({ setItemList, itemList }: any) => {
+import { ItemType } from "../types";
+import "./Searchbar.css";
+
+const Searchbar = ({ setItemList, itemList, isLogged, setIsLogged }: any) => {
   const [text, setText] = useState("");
 
   useEffect(() => {
     const loadItems = async () => {
-      const response = await fetch("http://94.19.34.183:4567/api/items");
+      const response = await fetch("/api/items");
+
+      if (response.status === 401) {
+        setIsLogged(false);
+        return;
+      }
 
       const data = await response.json();
 
@@ -32,16 +40,28 @@ const Searchbar = ({ setItemList, itemList }: any) => {
     // console.log(list);
 
     const mappedList = list.map((item: ItemType) => {
-      return <li key={item.id}>{item.marketName}</li>;
+      return (
+        <li key={item.id}>
+          <Link onClick={() => setText("")} to={`/item/${String(item.id)}`}>
+            {item.marketName}
+          </Link>
+        </li>
+      );
     });
 
     return mappedList;
   };
 
+  if (!isLogged) return <Redirect push to="/login" />;
+
   return (
-    <div>
-      <input onChange={(e) => setText(e.target.value)} value={text} />
-      <ul> {renderList()}</ul>
+    <div className="Searchbar">
+      <input
+        onChange={(e) => setText(e.target.value)}
+        value={text}
+        placeholder="Найти предмет"
+      />
+      <ul> {itemList ? renderList() : "Предметы не были загружены"}</ul>
     </div>
   );
 };

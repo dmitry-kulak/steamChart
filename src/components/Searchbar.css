@@ -1,0 +1,45 @@
+.Searchbar {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px 1px rgba(0, 0, 0, 0.1);
+  color: rgba(0, 0, 0, 0.83);
+  background-color: white;
+  overflow-y: auto;
+  max-height: 250px;
+  /* position: absolute; */
+}
+
+.Searchbar input {
+  width: 100%;
+  border: none;
+  color: rgba(0, 0, 0, 0.83);
+  box-sizing: border-box;
+  outline: none;
+  height: 30px;
+}
+
+.Searchbar a {
+  color: rgba(0, 0, 0, 0.83);
+  text-decoration: none;
+  box-sizing: border-box;
+  padding: 5px 5px;
+  display: list-item;
+  border: rgba(128, 128, 128, 0.1) 1px solid;
+
+}
+
+.Searchbar ul {
+  list-style-type: none;
+  text-align: left;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.Searchbar ul::before {
+  content: "";
+}
+
+.Searchbar li:hover {
+  text-decoration: underline;
+  background-color: rgba(128, 128, 128, 0.1);
+}

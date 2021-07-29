@@ -25,7 +25,7 @@ const Item = ({ itemList }: { itemList: ItemType[] }) => {
     );
 
     setItemData(itemFromId);
-  }, [itemList, id]);
+  }, [itemList, id, formData]);
 
   // setFormData from ulr if there's any query parameters
   // eg you clicked link with parameters
@@ -43,7 +43,7 @@ const Item = ({ itemList }: { itemList: ItemType[] }) => {
         });
       }
     }
-  }, []);
+  }, [setFormData]);
 
   // push formData to url
   const history = useHistory();
@@ -64,7 +64,7 @@ const Item = ({ itemList }: { itemList: ItemType[] }) => {
         {itemData?.marketName ? `| ${itemData?.marketName}` : null}
       </h3>
       <ItemForm formData={formData} setFormData={setFormData} />
-      <Graph formData={formData} id={id}/>
+      <Graph formData={formData} id={id} />
     </div>
   );
 };
