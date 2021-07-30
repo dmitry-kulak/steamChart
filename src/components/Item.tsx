@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 
-import { FormValues, ItemType } from "../types";
+import { FormValues, ItemInformation } from "../types";
 
 import Chart from "./Chart";
 import ItemForm from "./ItemForm";
@@ -11,13 +11,13 @@ const Item = ({
   isLogged,
   setIsLogged,
 }: {
-  itemList: ItemType[];
+  itemList: ItemInformation[];
   isLogged: boolean;
   setIsLogged: any;
 }) => {
   // id from url
   const { id } = useParams<{ id: string }>();
-  const [itemData, setItemData] = useState<ItemType | undefined>();
+  const [itemData, setItemData] = useState<ItemInformation | undefined>();
   const [formData, setFormData] = useState<FormValues>({
     currency: "rub",
     deals: false,
@@ -29,7 +29,7 @@ const Item = ({
   // find item in data array by id from url
   useEffect(() => {
     const itemFromId = itemList.find(
-      (elem: ItemType) => elem.id === Number(id)
+      (elem: ItemInformation) => elem.id === Number(id)
     );
 
     setItemData(itemFromId);

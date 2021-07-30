@@ -1,7 +1,10 @@
-export interface ItemType {
+export interface ItemInformation {
+  appid: number;
   id: number;
   marketHashName: string;
   marketName: string;
+  itemCategory: string;
+  itemType: string;
 }
 
 export interface FormValues {
@@ -36,8 +39,8 @@ export interface Series {
 
 export interface ChartState {
   itemData: ItemData;
-  seriesDeals: Series[],
-  seriesUsers: Series[],
+  seriesDeals: Series[];
+  seriesUsers: Series[];
   optionsDeals: any;
   optionsUsers: any;
 }

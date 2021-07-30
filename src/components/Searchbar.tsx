@@ -1,38 +1,38 @@
 import React, { useEffect, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
+import { Option } from "react-dropdown";
 
-import { ItemType } from "../types";
+import { ItemInformation } from "../types";
 import { fetchWithErrorCheck } from "../utils";
+import DropdownButton from "./DropdownButton";
 import "./Searchbar.css";
 
-const Searchbar = ({ setItemList, itemList, isLogged, setIsLogged }: any) => {
-  const [text, setText] = useState("");
+const Searchbar = ({
+  itemList,
+  setItemList,
+  isLogged,
+  setIsLogged,
+}: {
+  itemList: ItemInformation[] | undefined;
+  setItemList: React.Dispatch<
+    React.SetStateAction<ItemInformation[] | undefined>
+  >;
+  isLogged: boolean;
+  setIsLogged: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+  const [text, setText] = useState<string>("");
+  const [itemCategory, setItemCategory] = useState<Option>({
+    label: "Любая категория",
+    value: "Любая категория",
+  });
+  const [itemType, setItemType] = useState<Option>({
+    label: "Любой тип",
+    value: "Любой тип",
+  });
+  const [searchResults, setSearchResults] = useState<JSX.Element[]>([]);
 
-  useEffect(() => {
-    const fetchItems = async () => {
-      const data = await fetchWithErrorCheck("/api/items", setIsLogged);
-
-      setItemList(data);
-    };
-
-    if (isLogged) fetchItems();
-  }, [isLogged, setIsLogged, setItemList]);
-
-  const renderList = () => {
-    const list = itemList.filter((item: any) => {
-      if (text) {
-        return (
-          // I hate my life for this snippet of code
-          // if there's no russian name for item (marketName) it doesn't render it
-          item.marketHashName.toLowerCase().includes(text.toLowerCase()) ||
-          (item.marketName || "").toLowerCase().includes(text.toLowerCase())
-        );
-      } else {
-        return null;
-      }
-    });
-
-    const mappedList = list.map((item: ItemType) => {
+  const mapList = (list: ItemInformation[]) => {
+    return list.map((item: ItemInformation) => {
       return (
         <li key={item.id}>
           <Link onClick={() => setText("")} to={`/item/${String(item.id)}`}>
@@ -41,21 +41,90 @@ const Searchbar = ({ setItemList, itemList, isLogged, setIsLogged }: any) => {
         </li>
       );
     });
-
-    return mappedList;
   };
+
+  useEffect(() => {
+    const fetchItems = async () => {
+      const data = await fetchWithErrorCheck("/api/items", setIsLogged);
+
+      const dataWithReplacedNulls = data.map((item: ItemInformation) => {
+        item.itemCategory =
+          item.itemCategory === null ? "Без категории" : item.itemCategory;
+        item.itemType =
+          item.itemType === null ? "Без категории" : item.itemType;
+
+        return item;
+      });
+
+      setItemList(dataWithReplacedNulls);
+    };
+
+    if (isLogged) fetchItems();
+  }, [isLogged, setIsLogged, setItemList]);
+
+  // filter by text input
+  useEffect(() => {
+    const list = itemList!.filter((item: ItemInformation) => {
+      if (text) {
+        return (
+          // I hate my life for this snippet of code
+          // if there's no russian name for item (marketName) it doesn't render it
+          item.marketHashName.toLowerCase().includes(text.toLowerCase()) ||
+          (item.marketName || "").toLowerCase().includes(text.toLowerCase())
+        );
+      } else return null;
+    });
+
+    setSearchResults(mapList(list));
+  }, [text, itemList, setSearchResults]);
+
+  // filter by category
+  useEffect(() => {
+    const list = itemList!.filter((item: ItemInformation) => {
+      if (text) {
+        return item.itemCategory.includes(itemCategory.value);
+      } else return null;
+    });
+
+    setSearchResults(mapList(list));
+  }, [itemList, itemCategory, setSearchResults]);
+
+  // filter by type
+  useEffect(() => {
+    const list = itemList!.filter((item: ItemInformation) => {
+      if (text) {
+        return item.itemType.includes(itemType.value);
+      } else return null;
+    });
+
+    setSearchResults(mapList(list));
+  }, [itemList, itemType, setSearchResults]);
 
   if (!isLogged) return <Redirect push to="/login" />;
 
   return (
-    <div className="Searchbar">
-      <input
-        onChange={(e) => setText(e.target.value)}
-        value={text}
-        placeholder="Найти предмет"
+    <>
+      <DropdownButton
+        itemList={itemList}
+        itemCategory={itemCategory}
+        setItemCategory={setItemCategory}
       />
-      <ul> {itemList ? renderList() : "Предметы не были загружены"}</ul>
-    </div>
+      <DropdownButton
+        itemList={itemList}
+        itemType={itemType}
+        itemCategory={itemCategory}
+        setItemType={setItemType}
+      />
+
+      <div className="Searchbar">
+        <input
+          onChange={(e) => setText(e.target.value)}
+          value={text}
+          placeholder="Найти предмет"
+        />
+        <ul> {searchResults ? searchResults : "Предметы не были загружены"}</ul>
+      </div>
+    </>
   );
 };
 

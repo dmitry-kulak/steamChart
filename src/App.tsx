@@ -2,15 +2,15 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import Searchbar from "./components/Searchbar";
-import { ItemType } from "./types";
+import { ItemInformation } from "./types";
 import Item from "./components/Item";
 import Login from "./components/Login";
 import { fetchWithErrorCheck } from "./utils";
 import "./App.css";
 
 const App = () => {
-  const [itemList, setItemList] = useState<ItemType[] | undefined>([]);
-  const [isLogged, setIsLogged] = useState(false);
+  const [itemList, setItemList] = useState<ItemInformation[] | undefined>([]);
+  const [isLogged, setIsLogged] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -50,7 +50,7 @@ const App = () => {
           <Route
             exact
             path="/item/:id"
-            render={(props) => <Item isLogged={isLogged} setIsLogged={setIsLogged} itemList={itemList as ItemType[]} />}
+            render={(props) => <Item isLogged={isLogged} setIsLogged={setIsLogged} itemList={itemList as ItemInformation[]} />}
           />
           <Route
             exact
