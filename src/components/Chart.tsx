@@ -117,7 +117,7 @@ class Chart extends React.Component<FormValues, ChartState> {
 
     data = CryptoXor.decrypt(data.data, "testPass");
     data = JSON.parse(data);
-    console.log(data)
+    console.table(data)
 
     console.log(startDate)
 
