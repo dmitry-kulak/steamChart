@@ -119,8 +119,6 @@ class Chart extends React.Component<FormValues, ChartState> {
     data = JSON.parse(data);
     console.table(data)
 
-    console.log(startDate)
-
     if (startDate) {
       this.setState({
         optionsDeals: {

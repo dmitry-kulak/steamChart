@@ -35,8 +35,8 @@ const App = () => {
 
   return (
     <Router>
-      <div className="container-fluid">
-        <nav className="navbar App-Searchbar">
+      <div className="container">
+        <nav className="navbar">
           <Link to="/">Домой</Link>
           <Searchbar
             isLogged={isLogged}

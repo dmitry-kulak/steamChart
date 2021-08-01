@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-// import { useEffect, useContext } from "react";
 import { Redirect } from "react-router";
+
+import "./Login.css";
 
 const Login = ({
   isLogged,
@@ -9,8 +10,9 @@ const Login = ({
   isLogged: boolean;
   setIsLogged: any;
 }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string>("");
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -33,34 +35,51 @@ const Login = ({
       if (!response.ok) {
         if (response.status === 401) {
           setIsLogged(false);
-          throw new Error(
-            `HTTP ошибка! Пользователь не авторизован. Status: ${response.status}`
-          );
+          setError("user");
+          throw new Error("Неправильное имя пользователя или пароль");
         } else {
-          throw new Error(`HTTP ошибка! Status: ${response.status}`);
+          throw new Error(`HTTP ошибка! Response status: ${response.status}`);
         }
       }
     } catch (err) {
-      console.log(err);
+      setError(err.message);
+      console.log(err)
+    }
+  };
+
+  const renderError = () => {
+    switch (error) {
+      case "user":
+        return <span>Неправильное имя пользователя или пароль</span>;
+      case "":
+        return null;
+      default:
+        return <span>{error}</span>;
     }
   };
 
   if (isLogged) return <Redirect push to="/" />;
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Логин"
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Пароль"
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button type="submit">Войти</button>
-    </form>
+    <div className="login-container">
+      <form onSubmit={handleSubmit}>
+        <h1>Вход</h1>
+        {renderError()}
+        <input
+          type="text"
+          placeholder="Логин"
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Пароль"
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <button type="submit">Войти</button>
+      </form>
+    </div>
   );
 };
 
