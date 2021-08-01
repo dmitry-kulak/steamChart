@@ -103,20 +103,14 @@ const Searchbar = ({
   if (!isLogged) return <Redirect push to="/login" />;
 
   return (
-    <>
+    <div className="searchbar-container">
       <DropdownButton
         itemList={itemList}
         itemCategory={itemCategory}
         setItemCategory={setItemCategory}
       />
-      <DropdownButton
-        itemList={itemList}
-        itemType={itemType}
-        itemCategory={itemCategory}
-        setItemType={setItemType}
-      />
 
-      <div className="Searchbar">
+      <div className="searchbar">
         <input
           onChange={(e) => setText(e.target.value)}
           value={text}
@@ -124,7 +118,13 @@ const Searchbar = ({
         />
         <ul> {searchResults ? searchResults : "Предметы не были загружены"}</ul>
       </div>
-    </>
+      <DropdownButton
+        itemList={itemList}
+        itemType={itemType}
+        itemCategory={itemCategory}
+        setItemType={setItemType}
+      />
+    </div>
   );
 };
 

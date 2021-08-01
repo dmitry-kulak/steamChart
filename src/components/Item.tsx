@@ -5,6 +5,7 @@ import { FormValues, ItemInformation } from "../types";
 
 import Chart from "./Chart";
 import ItemForm from "./ItemForm";
+import "./Item.css";
 
 const Item = ({
   itemList,
@@ -72,7 +73,12 @@ const Item = ({
         {itemData?.marketName ? `| ${itemData?.marketName}` : null}
       </h3>
       <ItemForm formData={formData} setFormData={setFormData} />
-      <Chart isLogged={isLogged} setIsLogged={setIsLogged} formData={formData} id={id} />
+      <Chart
+        isLogged={isLogged}
+        setIsLogged={setIsLogged}
+        formData={formData}
+        id={id}
+      />
     </div>
   );
 };

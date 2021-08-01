@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400&display=swap");
 
 * {
   margin: 0;
@@ -6,8 +6,8 @@
   box-sizing: border-box;
 }
 
-body{
-  font-family: 'Montserrat', sans-serif;
+body {
+  font-family: "Montserrat", sans-serif;
 }
 
 .container {
@@ -16,8 +16,25 @@ body{
   min-height: 100vh;
 }
 
-.App-Searchbar{
-  width: 400px;
+.navbar {
+  position: relative;
   display: flex;
-  padding-top: 10px;
+  justify-content: space-between;
+  background-color: #f0f0f0de;
+  height: 50px;
+  padding: 0 3%;
+}
+
+.navbar a {
+  font-size: 1.3rem;
+  text-decoration: none;
+  color: black;
+}
+
+.navbar button {
+  outline: none;
+  border: none;
+  font-size: 1.3rem;
+  font-family: "Montserrat", sans-serif;
+  cursor: pointer;
 }

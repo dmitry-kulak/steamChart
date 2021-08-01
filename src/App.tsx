@@ -26,9 +26,7 @@ const App = () => {
   };
 
   const renderLoginButton = () => {
-    if (!isLogged) {
-      return <Link to="/login">Войти</Link>;
-    } else {
+    if (isLogged) {
       return <button onClick={logout}>Выйти</button>;
     }
   };
@@ -37,7 +35,9 @@ const App = () => {
     <Router>
       <div className="container">
         <nav className="navbar">
-          <Link to="/">Домой</Link>
+          <button>
+            <Link to="/">Домой</Link>
+          </button>
           <Searchbar
             isLogged={isLogged}
             setIsLogged={setIsLogged}
@@ -50,7 +50,13 @@ const App = () => {
           <Route
             exact
             path="/item/:id"
-            render={(props) => <Item isLogged={isLogged} setIsLogged={setIsLogged} itemList={itemList as ItemInformation[]} />}
+            render={(props) => (
+              <Item
+                isLogged={isLogged}
+                setIsLogged={setIsLogged}
+                itemList={itemList as ItemInformation[]}
+              />
+            )}
           />
           <Route
             exact
