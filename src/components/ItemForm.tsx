@@ -11,120 +11,113 @@ const ItemForm = ({
   formData: FormValues;
   setFormData: CallableFunction;
 }) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    switch (e.target.type) {
+      case "radio":
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+        break;
 
-  const handleRadioChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    field: string
-  ) => {
-    setFormData({ ...formData, [field]: e.target.value });
+      case "checkbox":
+        setFormData({ ...formData, [e.target.name]: !formData[e.target.name] });
+        break;
+    }
   };
 
   return (
     <form>
-      <label>
-        Валюта:
-        <input
-          type="radio"
-          name="currency"
-          value="rub"
-          checked={formData.currency === "rub"}
-          onChange={(e) => handleRadioChange(e, "currency")}
-        />
-        ₽
-      </label>
-      <label>
-        <input
-          type="radio"
-          name="currency"
-          value="usd"
-          checked={formData.currency === "usd"}
-          onChange={(e) => handleRadioChange(e, "currency")}
-        />
-        $
-      </label>
-
-      <label>
-        <input
-          type="checkbox"
-          name="orders"
-          checked={formData.orders}
-          onChange={() =>
-            setFormData({ ...formData, orders: !formData.orders })
-          }
-        />
-        Запросы на покупку
-      </label>
-      <label>
-        <input
-          type="checkbox"
-          name="lots"
-          checked={formData.lots}
-          onChange={() => setFormData({ ...formData, lots: !formData.lots })}
-        />
-        Лотов в продаже
-      </label>
-      <label>
-        <input
-          type="checkbox"
-          name="deals"
-          checked={formData.deals}
-          onChange={() => setFormData({ ...formData, deals: !formData.deals })}
-        />
-        Количество сделок
-      </label>
+      <div className="currency">
+        <label>
+          Валюта:
+          <input
+            type="radio"
+            name="currency"
+            value="rub"
+            checked={formData.currency === "rub"}
+            onChange={(e) => handleInputChange(e)}
+          />
+          ₽
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="currency"
+            value="usd"
+            checked={formData.currency === "usd"}
+            onChange={(e) => handleInputChange(e)}
+          />
+          $
+        </label>
+      </div>
+      <div className="checkboxes">
+        <label>
+          <input
+            type="checkbox"
+            name="orders"
+            checked={formData.orders}
+            onChange={(e) => handleInputChange(e)}
+          />
+          Запросы на покупку
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="lots"
+            checked={formData.lots}
+            onChange={(e) => handleInputChange(e)}
+          />
+          Лотов в продаже
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="deals"
+            checked={formData.deals}
+            onChange={(e) => handleInputChange(e)}
+          />
+          Количество сделок
+        </label>
+      </div>
 
       <br />
 
-      <label>
-        <input
-          type="radio"
-          name="online"
-          value="gameConcurrentInGame"
-          checked={formData.online === "gameConcurrentInGame"}
-          onChange={(e) => handleRadioChange(e, "online")}
-        />
-        Количество в игре (CS:GO)
-      </label>
-      <label>
-        <input
-          type="radio"
-          name="online"
-          value="gameConcurrentTwitchViewers"
-          checked={formData.online === "gameConcurrentTwitchViewers"}
-          onChange={(e) => handleRadioChange(e, "online")}
-        />
-        Количество зрителей в Twitch (CS:GO)
-      </label>
-      <label>
-        <input
-          type="radio"
-          name="online"
-          value="steamConcurrentOnline"
-          checked={formData.online === "steamConcurrentOnline"}
-          onChange={(e) => handleRadioChange(e, "online")}
-        />
-        Общий онлайн Steam
-      </label>
-      <label>
-        <input
-          type="radio"
-          name="online"
-          value="steamConcurrentInGame"
-          checked={formData.online === "steamConcurrentInGame"}
-          onChange={(e) => handleRadioChange(e, "online")}
-        />
-        Общее количество играющих
-      </label>
-      <label>
-        <input
-          type="radio"
-          name="online"
-          value="none"
-          checked={formData.online === "none"}
-          onChange={(e) => handleRadioChange(e, "online")}
-        />
-        Выключить
-      </label>
+      <div className="people">
+        <label>
+          <input
+            type="checkbox"
+            name="players"
+            checked={formData.players}
+            onChange={(e) => handleInputChange(e)}
+          />
+          Количество в игре (CS:GO)
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="twitchViewers"
+            checked={formData.twitchViewers}
+            onChange={(e) => handleInputChange(e)}
+          />
+          Количество зрителей в Twitch (CS:GO)
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="steamOnline"
+            checked={formData.steamOnline}
+            onChange={(e) => handleInputChange(e)}
+          />
+          Общий онлайн Steam
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="totalPlayers"
+            checked={formData.totalPlayers}
+            onChange={(e) => handleInputChange(e)}
+          />
+          Общее количество играющих
+        </label>
+      </div>
     </form>
   );
 };
