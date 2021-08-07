@@ -8,7 +8,7 @@ const Login = ({
   setIsLogged,
 }: {
   isLogged: boolean;
-  setIsLogged: any;
+  setIsLogged: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -43,7 +43,7 @@ const Login = ({
       }
     } catch (err) {
       setError(err.message);
-      console.log(err)
+      console.log(err);
     }
   };
 

@@ -2,14 +2,12 @@ import React from "react";
 
 import { FormValues } from "../types";
 
-// i could use formik but didn't figured out how to change state in Item component on change so this abomination
-
 const ItemForm = ({
   formData,
   setFormData,
 }: {
   formData: FormValues;
-  setFormData: CallableFunction;
+  setFormData: React.Dispatch<React.SetStateAction<FormValues>>;
 }) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     switch (e.target.type) {
