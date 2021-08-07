@@ -8,21 +8,20 @@ import Login from "./components/Login";
 import { fetchWithErrorCheck } from "./utils";
 import "./App.css";
 
+const IS_LOGGED = Boolean(localStorage.getItem('IS_LOGGED'))
+
 const App = () => {
   const [itemList, setItemList] = useState<ItemInformation[] | undefined>([]);
-  const [isLogged, setIsLogged] = useState<boolean>(false);
+  const [isLogged, setIsLogged] = useState<boolean>(IS_LOGGED);
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      fetchWithErrorCheck("/api/profile", setIsLogged);
-    };
-
-    fetchProfile();
+    fetchWithErrorCheck("/api/profile", setIsLogged);
   }, []);
 
-  const logout = async () => {
+  const logout = () => {
     fetch("/api/logout");
     setIsLogged(false);
+    localStorage.clear();
   };
 
   const renderLoginButton = () => {

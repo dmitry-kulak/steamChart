@@ -47,6 +47,8 @@ const Searchbar = ({
     const fetchItems = async () => {
       const data = await fetchWithErrorCheck("/api/items", setIsLogged);
 
+      if (!data) return;
+
       const dataWithReplacedNulls = data.map((item: ItemInformation) => {
         item.itemCategory =
           item.itemCategory === null ? "Без категории" : item.itemCategory;

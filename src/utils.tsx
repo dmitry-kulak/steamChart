@@ -1,8 +1,7 @@
 export const fetchWithErrorCheck = async (
   url: string,
   setIsLogged: any,
-  jsonify: boolean = true,
-  chart: boolean = false
+  jsonify: boolean = true
 ) => {
   let response;
   let data;
@@ -12,10 +11,8 @@ export const fetchWithErrorCheck = async (
 
     if (!response.ok) {
       if (response.status === 401) {
+        localStorage.setItem("IS_LOGGED", "false");
         setIsLogged(false);
-        if (chart) {
-          return 1;
-        }
         throw new Error(
           `HTTP ошибка! Пользователь не авторизован. Status: ${response.status}`
         );
@@ -25,6 +22,7 @@ export const fetchWithErrorCheck = async (
     }
 
     if (url === "/api/profile") {
+      localStorage.setItem("IS_LOGGED", "true");
       return setIsLogged(true);
     }
 
