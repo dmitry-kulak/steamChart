@@ -12,35 +12,47 @@ export interface FormValues {
   deals?: boolean;
   lots?: boolean;
   orders?: boolean;
-  online?: string;
+  players?: boolean;
+  twitchViewers?: boolean;
+  steamOnline?: boolean;
+  totalPlayers?: boolean;
+  id?: string;
   [key: string]: any;
 }
 
 export interface ItemData {
-  date?: number;
-  priceRub?: number[];
-  priceUsd?: number[];
-  dealsQty?: number[];
-  ordersRub?: number[];
-  ordersUsd?: number[];
-  lotsRub?: number[];
-  lotsUsd?: number[];
-  gameConcurrentInGame?: number[];
-  steamConcurrentOnline?: number[];
-  gameConcurrentTwitchViewers?: number[];
-  steamConcurrentInGame?: number[];
+  dates?: number[];
+  priceRub: number[];
+  priceUsd: number[];
+  dealsQty: number[];
+  ordersRub: number[];
+  ordersUsd: number[];
+  lotsRub: number[];
+  lotsUsd: number[];
+  gameConcurrentInGame: number[];
+  steamConcurrentOnline: number[];
+  gameConcurrentTwitchViewers: number[];
+  steamConcurrentInGame: number[];
+  startDate: number | null;
+  maxPriceRub: number | null;
+  maxPriceUsd: number | null;
+  maxSteam: number | null;
+  maxSteamdb: number | null;
 }
 
-export interface Series {
-  data: number[] | undefined;
-  name: string;
-  type: string;
+export interface ItemDataResponse extends ItemData {
+  date: number;
+}
+
+export interface ChartProps {
+  formData: FormValues;
+  isLogged: boolean;
+  id: string;
+  setIsLogged: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface ChartState {
   itemData: ItemData;
-  seriesDeals: Series[];
-  seriesUsers: Series[];
-  optionsDeals: any;
-  optionsUsers: any;
+  data: any;
+  options?: any;
 }
