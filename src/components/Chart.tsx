@@ -32,10 +32,10 @@ class Chart extends React.Component<ChartProps, ChartState> {
       gameConcurrentTwitchViewers: [],
       steamConcurrentInGame: [],
       startDate: null,
-      maxPriceRub: null,
-      maxPriceUsd: null,
-      maxSteam: null,
-      maxSteamdb: null,
+      // maxPriceRub: null,
+      // maxPriceUsd: null,
+      // maxSteam: null,
+      // maxSteamdb: null,
     },
 
     data: {
@@ -124,10 +124,10 @@ class Chart extends React.Component<ChartProps, ChartState> {
     let data = await response.json();
 
     const startDate = data.startDate;
-    const maxPriceRub = data.maxPriceRub;
-    const maxPriceUsd = data.maxPriceUsd;
-    const maxSteam = data.maxSteam;
-    const maxSteamdb = data.maxSteamdb;
+    // const maxPriceRub = data.maxPriceRub;
+    // const maxPriceUsd = data.maxPriceUsd;
+    // const maxSteam = data.maxSteam;
+    // const maxSteamdb = data.maxSteamdb;
 
     data = CryptoXor.decrypt(data.data, "testPass");
     data = JSON.parse(data);
@@ -168,10 +168,10 @@ class Chart extends React.Component<ChartProps, ChartState> {
         gameConcurrentTwitchViewers: gameConcurrentTwitchViewers,
         steamConcurrentInGame: steamConcurrentInGame,
         startDate: startDate,
-        maxPriceRub: maxPriceRub,
-        maxPriceUsd: maxPriceUsd,
-        maxSteam: maxSteam,
-        maxSteamdb: maxSteamdb,
+        // maxPriceRub: maxPriceRub,
+        // maxPriceUsd: maxPriceUsd,
+        // maxSteam: maxSteam,
+        // maxSteamdb: maxSteamdb,
       },
     });
   };
@@ -342,10 +342,10 @@ class Chart extends React.Component<ChartProps, ChartState> {
             x: { type: "time" },
             "y-axis-currency": {
               min: 0,
-              max:
-                this.props.formData.currency === "rub"
-                  ? this.state.itemData.maxPriceRub
-                  : this.state.itemData.maxPriceUsd,
+              // max:
+              //   this.props.formData.currency === "rub"
+              //     ? this.state.itemData.maxPriceRub
+              //     : this.state.itemData.maxPriceUsd,
               position: "right",
               title: {
                 display: true,
@@ -356,7 +356,7 @@ class Chart extends React.Component<ChartProps, ChartState> {
             },
             "y-axis-steam": {
               min: 0,
-              max: this.state.itemData.maxSteam,
+              // max: this.state.itemData.maxSteam,
               title: {
                 display: true,
                 text: "Количество запросов/лотов/сделок",
@@ -364,7 +364,7 @@ class Chart extends React.Component<ChartProps, ChartState> {
             },
             "y-axis-steamdb": {
               min: 0,
-              max: this.state.itemData.maxSteamdb,
+              // max: this.state.itemData.maxSteamdb,
               title: {
                 display: true,
                 text: "Количество человек",
