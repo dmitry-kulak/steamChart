@@ -67,7 +67,7 @@ export const formatText = (s: string) => {
   let result = ``
   for (let i = 0; i < s.length; i++) {
     c = s[i].charCodeAt(0)
-    if (c >= 97 && c <= 122 || c >= 65 && c <= 90) {
+    if ((c >= 97 && c <= 122) || (c >= 65 && c <= 90)) { // a-z or A-Z
       result += `<span class="english-letter">${s[i]}</span>`
     } else {
       result += s[i]
