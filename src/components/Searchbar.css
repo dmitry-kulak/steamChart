@@ -47,11 +47,9 @@
   font-weight: 300;
   background-color: white;
   position: absolute;
-  top: 400%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  min-width: 500px;
-  max-width: 630px;
+  top: 50px;
+  transform: translate(-165px);
+  width: 630px;
   max-height: 300px;
   overflow: auto;
   visibility: hidden;
