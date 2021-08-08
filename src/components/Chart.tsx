@@ -222,7 +222,7 @@ class Chart extends React.Component<ChartProps, ChartState> {
     if (props.orders && props.currency === "rub") {
       newSeriesDeals.push({
         data: this.state.itemData.ordersRub,
-        label: "Запросы на покупку",
+        label: "Запросов на покупку",
         type: "line",
         fill: {
           target: "origin",
@@ -236,7 +236,7 @@ class Chart extends React.Component<ChartProps, ChartState> {
     if (props.orders && props.currency === "usd") {
       newSeriesDeals.push({
         data: this.state.itemData.ordersRub,
-        label: "Запросы на покупку",
+        label: "Запросов на покупку",
         type: "line",
         fill: {
           target: "origin",
@@ -250,7 +250,7 @@ class Chart extends React.Component<ChartProps, ChartState> {
     if (props.lots && props.currency === "rub") {
       newSeriesDeals.push({
         data: this.state.itemData.lotsRub,
-        label: "Лотов в продаже",
+        label: "Лотов на продажу",
         type: "line",
         fill: {
           target: "origin",
@@ -264,7 +264,7 @@ class Chart extends React.Component<ChartProps, ChartState> {
     if (props.lots && props.currency === "usd") {
       newSeriesDeals.push({
         data: this.state.itemData.lotsUsd,
-        label: "Лотов в продаже",
+        label: "Лотов на продажу",
         type: "line",
         fill: {
           target: "origin",

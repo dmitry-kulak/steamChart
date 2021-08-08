@@ -54,7 +54,7 @@ const ItemForm = ({
             checked={formData.orders}
             onChange={(e) => handleInputChange(e)}
           />
-          Запросы на покупку
+          Запросов на покупку
         </label>
         <label>
           <input
@@ -63,7 +63,7 @@ const ItemForm = ({
             checked={formData.lots}
             onChange={(e) => handleInputChange(e)}
           />
-          Лотов в продаже
+          Лотов на продажу
         </label>
         <label>
           <input
