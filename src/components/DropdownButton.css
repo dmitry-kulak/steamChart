@@ -1,0 +1,16 @@
+.Dropdown-root {
+  width: 190px;
+  line-height: 100%;
+}
+
+.Dropdown-menu {
+  width: 220px;
+}
+
+.Dropdown-control {
+  height: 100%;
+}
+
+.Dropdown-arrow {
+  display: none;
+}

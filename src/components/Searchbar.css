@@ -69,23 +69,6 @@
   background-color: rgba(128, 128, 128, 0.1);
 }
 
-.Dropdown-root {
-  width: 190px;
-  line-height: 100%;
-}
-
-.Dropdown-menu {
-  width: 220px;
-}
-
-.Dropdown-control {
-  height: 100%;
-}
-
-.Dropdown-arrow {
-  display: none;
-}
-
 *::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);

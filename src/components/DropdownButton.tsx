@@ -2,6 +2,7 @@ import React from "react";
 import Dropdown, { Option } from "react-dropdown";
 
 import "react-dropdown/style.css";
+import "./DropdownButton.css"
 import { ItemInformation } from "../types";
 
 const DropdownButton = ({
