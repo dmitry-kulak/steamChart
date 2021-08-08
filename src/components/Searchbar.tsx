@@ -36,7 +36,7 @@ const Searchbar = ({
       return (
         <li key={item.id}>
           <Link onClick={() => setText("")} to={`/item/${String(item.id)}`}>
-            {item.marketName}
+            {item.marketName || item.marketHashName}
           </Link>
         </li>
       );
