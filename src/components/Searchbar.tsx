@@ -22,12 +22,12 @@ const Searchbar = ({
 }) => {
   const [text, setText] = useState<string>("");
   const [itemCategory, setItemCategory] = useState<Option>({
-    label: "Любая категория",
-    value: "Любая категория",
+    label: "Категория",
+    value: "Категория",
   });
   const [itemType, setItemType] = useState<Option>({
-    label: "Любой тип",
-    value: "Любой тип",
+    label: "Тип",
+    value: "Тип",
   });
   const [searchResults, setSearchResults] = useState<JSX.Element[]>([]);
 
