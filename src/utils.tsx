@@ -59,3 +59,19 @@ export const filterItem = (inputText: string, marketHashName: string, marketName
   const regex = new RegExp(inputText.split("").map(x => "(" + escape(x) + ").*").join(""), 'gi')
   return Boolean(marketHashName.match(regex)) || Boolean((marketName || "").match(regex))
 }
+
+export const formatText = (s: string) => {
+  // Выделить английские символы жирным шрифтом
+
+  let c
+  let result = ``
+  for (let i = 0; i < s.length; i++) {
+    c = s[i].charCodeAt(0)
+    if (c >= 97 && c <= 122 || c >= 65 && c <= 90) {
+      result += `<span class="english-letter">${s[i]}</span>`
+    } else {
+      result += s[i]
+    }
+  }
+  return <span dangerouslySetInnerHTML={{__html: result}} />
+}
