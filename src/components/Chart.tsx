@@ -1,102 +1,113 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import ApexChart from "react-apexcharts";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Redirect } from "react-router-dom";
 import { CryptoXor } from "crypto-xor";
 
-import { FormValues, ChartState, ItemData, Series } from "../types";
-import { fetchWithErrorCheck } from "../utils";
+import { ChartProps, ChartState, ItemData, ItemDataResponse } from "../types";
+import { fetchWithErrorCheck, colors } from "../utils";
+import { Line, Chart as Chartjs, } from "react-chartjs-2";
+import "chartjs-adapter-date-fns";
+import zoomPlugin from "chartjs-plugin-zoom";
+// @ts-ignore
+import { CrosshairPlugin } from "chartjs-plugin-crosshair";
 
-class Chart extends React.Component<FormValues, ChartState> {
+import './Chart.css'
+
+
+Chartjs.register([ zoomPlugin]);
+
+class Chart extends React.Component<ChartProps, ChartState> {
   state: ChartState = {
-    itemData: {},
-
-    seriesDeals: [],
-    seriesUsers: [],
-
-    optionsDeals: {
-      xaxis: {
-        type: "datetime",
-        min: undefined,
-      },
-
-      yaxis: [
-        {
-          decimalsInFloat: 2,
-          seriesName:
-            this.props.formData.currecy === "rub" ? "Цена ₽" : "Цена $",
-        },
-        { decimalsInFloat: 0, opposite: true },
-      ],
-
-      chart: {
-        animations: {
-          enabled: false,
-        },
-        stacked: false,
-        height: 200,
-      },
-
-      theme: {
-        mode: "light",
-        palette: "palette8",
-      },
-
-      fill: {
-        type: ["solid", "gradient", "gradient", "gradient"],
-        gradient: {
-          shadeIntensity: 1,
-          opacityFrom: 0.1,
-          opacityTo: 0.5,
-          stops: [0, 70, 100],
-        },
-      },
-
-      stroke: {
-        curve: "straight",
-        width: 2,
-      },
-
-      markers: {
-        size: 0,
-      },
-
-      dataLabels: {
-        enabled: false,
-      },
+    itemData: {
+      dates: [],
+      priceRub: [],
+      priceUsd: [],
+      dealsQty: [],
+      ordersRub: [],
+      ordersUsd: [],
+      lotsRub: [],
+      lotsUsd: [],
+      gameConcurrentInGame: [],
+      steamConcurrentOnline: [],
+      gameConcurrentTwitchViewers: [],
+      steamConcurrentInGame: [],
+      startDate: null,
+      maxPriceRub: null,
+      maxPriceUsd: null,
+      maxSteam: null,
+      maxSteamdb: null,
     },
 
-    optionsUsers: {
-      xaxis: {
-        type: "datetime",
+    data: {
+      labels: [],
+      datasets: [],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: false,
+      interaction: {
+        mode: "index",
+        intersect: false,
       },
 
-      yaxis: [
-        {
+      scales: {
+        x: { type: "time" },
+        "y-axis-currency": {
+          min: 0,
+          position: "right",
           title: {
-            text: "Пользователи, чел.",
+            display: true,
+            text: `Цена, ${this.props.formData.currency === "rub" ? "₽" : "$"}`,
           },
         },
-      ],
-
-      chart: {
-        animations: {
-          enabled: false,
+        "y-axis-steam": {
+          min: 0,
+          title: {
+            display: true,
+            text: "Количество запросов/лотов/сделок",
+          },
         },
-        height: 600,
+        "y-axis-steamdb": {
+          min: 0,
+          title: {
+            display: true,
+            text: "Количество человек",
+          },
+        },
       },
 
-      stroke: {
-        curve: "straight",
-        width: 1,
+      elements: {
+        point: {
+          radius: 0,
+        },
       },
 
-      markers: {
-        size: 0,
-      },
+      plugins: {
+        
+        crosshair: {
+          line: {
+            color: "black",
+            width: 0.7,
+            dashPattern: [5, 5],
+          },
+          zoom: {
+            enabled: false,
+          },
+        },
 
-      dataLabels: {
-        enabled: false,
+        zoom: {
+          pan: {
+            enabled: true,
+            mode: "x",
+          },
+          zoom: {
+            mode: "x",
+            wheel: {
+              enabled: true,
+            },
+          },
+        },
       },
     },
   };
@@ -105,57 +116,46 @@ class Chart extends React.Component<FormValues, ChartState> {
     const response = await fetchWithErrorCheck(
       `/api/chart/${this.props.id}`,
       this.props.setIsLogged,
-      false,
-      true
+      false
     );
 
-    if (response === 1) return <Redirect push to="/login" />;
+    if (!this.props.isLogged) return <Redirect push to="/login" />;
 
     let data = await response.json();
 
     const startDate = data.startDate;
+    const maxPriceRub = data.maxPriceRub;
+    const maxPriceUsd = data.maxPriceUsd;
+    const maxSteam = data.maxSteam;
+    const maxSteamdb = data.maxSteamdb;
 
     data = CryptoXor.decrypt(data.data, "testPass");
     data = JSON.parse(data);
-    console.table(data)
 
-    if (startDate) {
-      this.setState({
-        optionsDeals: {
-          xaxis: {
-            type: "datetime",
-            min: startDate,
-          },
-        },
-      });
-    }
-
-    const priceRub = data.map((item: ItemData) => [item.date, item.priceRub]);
-    const priceUsd = data.map((item: ItemData) => [item.date, item.priceUsd]);
-    const dealsQty = data.map((item: ItemData) => [item.date, item.dealsQty]);
-    const ordersRub = data.map((item: ItemData) => [item.date, item.ordersRub]);
-    const ordersUsd = data.map((item: ItemData) => [item.date, item.ordersUsd]);
-    const lotsRub = data.map((item: ItemData) => [item.date, item.lotsRub]);
-    const lotsUsd = data.map((item: ItemData) => [item.date, item.lotsUsd]);
-    const gameConcurrentInGame = data.map((item: ItemData) => [
-      item.date,
-      item.gameConcurrentInGame,
-    ]);
-    const steamConcurrentOnline = data.map((item: ItemData) => [
-      item.date,
-      item.steamConcurrentOnline,
-    ]);
-    const gameConcurrentTwitchViewers = data.map((item: ItemData) => [
-      item.date,
-      item.gameConcurrentTwitchViewers,
-    ]);
-    const steamConcurrentInGame = data.map((item: ItemData) => [
-      item.date,
-      item.steamConcurrentInGame,
-    ]);
+    const dates = data.map((item: ItemDataResponse) => item.date);
+    const priceRub = data.map((item: ItemDataResponse) => item.priceRub);
+    const priceUsd = data.map((item: ItemDataResponse) => item.priceUsd);
+    const dealsQty = data.map((item: ItemDataResponse) => item.dealsQty);
+    const ordersRub = data.map((item: ItemDataResponse) => item.ordersRub);
+    const ordersUsd = data.map((item: ItemDataResponse) => item.ordersUsd);
+    const lotsRub = data.map((item: ItemDataResponse) => item.lotsRub);
+    const lotsUsd = data.map((item: ItemDataResponse) => item.lotsUsd);
+    const gameConcurrentInGame = data.map(
+      (item: ItemData) => item.gameConcurrentInGame
+    );
+    const steamConcurrentOnline = data.map(
+      (item: ItemData) => item.steamConcurrentOnline
+    );
+    const gameConcurrentTwitchViewers = data.map(
+      (item: ItemData) => item.gameConcurrentTwitchViewers
+    );
+    const steamConcurrentInGame = data.map(
+      (item: ItemData) => item.steamConcurrentInGame
+    );
 
     this.setState({
       itemData: {
+        dates: dates,
         priceRub: priceRub,
         priceUsd: priceUsd,
         dealsQty: dealsQty,
@@ -167,153 +167,239 @@ class Chart extends React.Component<FormValues, ChartState> {
         steamConcurrentOnline: steamConcurrentOnline,
         gameConcurrentTwitchViewers: gameConcurrentTwitchViewers,
         steamConcurrentInGame: steamConcurrentInGame,
+        startDate: startDate,
+        maxPriceRub: maxPriceRub,
+        maxPriceUsd: maxPriceUsd,
+        maxSteam: maxSteam,
+        maxSteamdb: maxSteamdb,
       },
     });
   };
+//   #1929d4
+// #7f10c4
+// #ad00b2
+// #cc00a0
+// #e2148f
+// #f13881
+// #fa5576
+// #ff7070
 
-  updateDealsSeries = () => {
-    let newSeriesDeals: Series[] = [];
-    let newSeriesUsers: Series[] = [];
+  updateDealsSeries = (props: any) => {
+    let newSeriesDeals = [];
 
-    if (this.props.formData.currency === "rub") {
+    if (props.currency === "rub") {
       newSeriesDeals.push({
         data: this.state.itemData.priceRub,
-        name: "Цена ₽",
+        label: "Цена ₽",
         type: "line",
+        borderColor: colors.curr,
+        yAxisID: "y-axis-currency",
+
       });
     }
 
-    if (this.props.formData.currency === "usd") {
+    if (props.currency === "usd") {
       newSeriesDeals.push({
         data: this.state.itemData.priceUsd,
-        name: "Цена $",
+        label: "Цена $",
         type: "line",
+        borderColor: colors.curr,
+        yAxisID: "y-axis-currency",
       });
     }
 
-    if (this.props.formData.deals) {
+    if (props.deals) {
       newSeriesDeals.push({
         data: this.state.itemData.dealsQty,
-        name: "Количество сделок",
-        type: "area",
+        label: "Количество сделок",
+        type: "line",
+        backgroundColor: colors.deals,
+        borderColor: "rgba(127, 16, 196, 0.6)",
+        yAxisID: "y-axis-steam",
       });
     }
 
-    if (this.props.formData.orders && this.props.formData.currency === "rub") {
+    if (props.orders && props.currency === "rub") {
       newSeriesDeals.push({
         data: this.state.itemData.ordersRub,
-        name: "Запросы на покупку",
-        type: "area",
+        label: "Запросы на покупку",
+        type: "line",
+        backgroundColor: "rgb(54, 62, 23)",
+        borderColor: colors.orders,
+        yAxisID: "y-axis-steam",
       });
     }
 
-    if (this.props.formData.orders && this.props.formData.currency === "usd") {
+    if (props.orders && props.currency === "usd") {
       newSeriesDeals.push({
         data: this.state.itemData.ordersRub,
-        name: "Запросы на покупку",
-        type: "area",
+        label: "Запросы на покупку",
+        type: "line",
+        backgroundColor: "rgb(82, 74, 65)",
+        borderColor: colors.orders,
+        yAxisID: "y-axis-steam",
       });
     }
 
-    if (this.props.formData.lots && this.props.formData.currency === "rub") {
+    if (props.lots && props.currency === "rub") {
       newSeriesDeals.push({
         data: this.state.itemData.lotsRub,
-        name: "Лотов в продаже",
-        type: "area",
+        label: "Лотов в продаже",
+        type: "line",
+        backgroundColor: "rgb(98, 71, 95)",
+        borderColor: colors.lots,
+        yAxisID: "y-axis-steam",
       });
     }
 
-    if (this.props.formData.lots && this.props.formData.currency === "usd") {
+    if (props.lots && props.currency === "usd") {
       newSeriesDeals.push({
         data: this.state.itemData.lotsUsd,
-        name: "Лотов в продаже",
-        type: "area",
+        label: "Лотов в продаже",
+        type: "line",
+        backgroundColor: "rgb(54, 62, 17)",
+        borderColor: colors.lots,
+        yAxisID: "y-axis-steam",
       });
     }
 
-    this.setState({
-      seriesDeals: newSeriesDeals,
-    });
+    return newSeriesDeals;
   };
 
-  updateUsersSerier = () => {
-    let newSeriesUsers: Series[] = [];
+  updateUsersSeries = (props: any) => {
+    let newSeriesUsers = [];
 
-    if (this.props.formData.online === "gameConcurrentInGame") {
+    if (props.players) {
       newSeriesUsers.push({
         data: this.state.itemData.gameConcurrentInGame,
-        name: "Количество в игре",
-        type: "area",
+        label: "Количество в игре",
+        type: "line",
+        borderColor: colors.gameConcurrentInGame,
+        yAxisID: "y-axis-steamdb",
       });
     }
 
-    if (this.props.formData.online === "steamConcurrentOnline") {
+    if (props.steamOnline) {
       newSeriesUsers.push({
         data: this.state.itemData.steamConcurrentOnline,
-        name: "Общий онлайн Steam",
-        type: "area",
+        label: "Общий онлайн Steam",
+        type: "line",
+        borderColor: colors.steamConcurrentOnline,
+        yAxisID: "y-axis-steamdb",
       });
     }
 
-    if (this.props.formData.online === "gameConcurrentTwitchViewers") {
+    if (props.twitchViewers) {
       newSeriesUsers.push({
         data: this.state.itemData.gameConcurrentTwitchViewers,
-        name: "Количество зрителей в Twitch",
-        type: "area",
+        label: "Количество зрителей в Twitch",
+        type: "line",
+        borderColor: colors.gameConcurrentTwitchViewers,
+        yAxisID: "y-axis-steamdb",
       });
     }
 
-    if (this.props.formData.online === "steamConcurrentInGame") {
+    if (props.totalPlayers) {
       newSeriesUsers.push({
         data: this.state.itemData.steamConcurrentInGame,
-        name: "Общее количество играющих",
-        type: "area",
+        label: "Общее количество играющих",
+        type: "line",
+        borderColor: colors.steamConcurrentInGame,
+        yAxisID: "y-axis-steamdb",
       });
     }
 
-    this.setState({
-      seriesUsers: newSeriesUsers,
-    });
+    return newSeriesUsers;
   };
 
   async componentDidMount() {
     await this.fetchData();
 
     if (this.props.isLogged) {
-      this.updateDealsSeries();
-      this.updateUsersSerier();
+      this.setState({
+        data: {
+          labels: this.state.itemData.dates,
+          datasets: [
+            ...this.updateDealsSeries(this.props.formData),
+            ...this.updateUsersSeries(this.props.formData),
+          ],
+        },
+        options: {
+          ...this.state.options,
+          scales: {
+            x: { type: "time" },
+            "y-axis-currency": {
+              min: 0,
+              max:
+                this.props.formData.currency === "rub"
+                  ? this.state.itemData.maxPriceRub
+                  : this.state.itemData.maxPriceUsd,
+              position: "right",
+              title: {
+                display: true,
+                text: `Цена, ${
+                  this.props.formData.currency === "rub" ? "₽" : "$"
+                }`,
+              },
+            },
+            "y-axis-steam": {
+              min: 0,
+              max: this.state.itemData.maxSteam,
+              title: {
+                display: true,
+                text: "Количество запросов/лотов/сделок",
+              },
+            },
+            "y-axis-steamdb": {
+              min: 0,
+              max: this.state.itemData.maxSteamdb,
+              title: {
+                display: true,
+                text: "Количество человек",
+              },
+            },
+          },
+        },
+      });
     }
   }
 
-  async componentDidUpdate(prevProps: { formData: FormValues; id: number }) {
+  async componentDidUpdate(prevProps: ChartProps) {
     if (
       JSON.stringify(prevProps.formData) !== JSON.stringify(this.props.formData)
     ) {
-      this.updateDealsSeries();
-      this.updateUsersSerier();
+      this.setState({
+        data: {
+          labels: this.state.itemData.dates,
+          datasets: [
+            ...this.updateDealsSeries(this.props.formData),
+            ...this.updateUsersSeries(this.props.formData),
+          ],
+        },
+      });
     }
 
     if (prevProps.id !== this.props.id) {
       await this.fetchData();
-      this.updateDealsSeries();
-      this.updateUsersSerier();
+
+      if (this.props.isLogged) {
+        this.setState({
+          data: {
+            labels: this.state.itemData.dates,
+            datasets: [
+              ...this.updateDealsSeries(this.props.formData),
+              ...this.updateUsersSeries(this.props.formData),
+            ],
+          },
+        });
+      }
     }
   }
 
   render() {
     return (
-      <div>
-        <ApexChart
-          options={this.state.optionsDeals}
-          series={this.state.seriesDeals}
-        />
-
-        {this.props.formData.online === "none" ? null : (
-          <ApexChart
-            options={this.state.optionsUsers}
-            series={this.state.seriesUsers}
-          />
-        )}
+      <div className='chart'>
+        <Line options={this.state.options} data={this.state.data} />
       </div>
     );
   }

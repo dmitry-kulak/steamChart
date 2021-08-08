@@ -18,13 +18,16 @@ const Item = ({
 }) => {
   // id from url
   const { id } = useParams<{ id: string }>();
-  const [itemData, setItemData] = useState<ItemInformation | undefined>();
+  const [itemInformation, setItemInformation] = useState<ItemInformation | undefined>();
   const [formData, setFormData] = useState<FormValues>({
     currency: "rub",
     deals: false,
     orders: false,
     lots: true,
-    online: "none",
+    players: false,
+    twitchViewers: false,
+    steamOnline: false,
+    totalPlayers: false,
   });
 
   // find item in data array by id from url
@@ -33,7 +36,7 @@ const Item = ({
       (elem: ItemInformation) => elem.id === Number(id)
     );
 
-    setItemData(itemFromId);
+    setItemInformation(itemFromId);
   }, [itemList, id, formData]);
 
   // setFormData from ulr if there's any query parameters
@@ -67,10 +70,10 @@ const Item = ({
   }, [formData, history]);
 
   return (
-    <div>
+    <div className='item'>
       <h3>
-        Предмет: {itemData?.marketHashName}{" "}
-        {itemData?.marketName ? `| ${itemData?.marketName}` : null}
+        Предмет: {itemInformation?.marketHashName}{" "}
+        {itemInformation?.marketName ? `| ${itemInformation?.marketName}` : null}
       </h3>
       <ItemForm formData={formData} setFormData={setFormData} />
       <Chart

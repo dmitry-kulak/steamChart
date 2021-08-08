@@ -36,3 +36,14 @@ export const fetchWithErrorCheck = async (
     console.log(err);
   }
 };
+
+export const colors = {
+  curr: "#6929c4",
+  deals: "#1192e8",
+  orders: "#005d5d",
+  lots: "#9f1853",
+  gameConcurrentInGame: "#fa4d56",
+  gameConcurrentTwitchViewers: "#570408",
+  steamConcurrentOnline: "#198038",
+  steamConcurrentInGame: "#002d9c",
+};

@@ -1,0 +1,5 @@
+.chart {
+  position: relative;
+  max-height: 600px;
+  flex-grow: 1;
+}
