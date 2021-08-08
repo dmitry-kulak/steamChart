@@ -72,7 +72,7 @@ const Item = ({
   return (
     <div className='item'>
       <h3>
-        Предмет: {itemInformation?.marketHashName}{" "}
+        {itemInformation?.marketHashName}{" "}
         {itemInformation?.marketName ? `| ${itemInformation?.marketName}` : null}
       </h3>
       <ItemForm formData={formData} setFormData={setFormData} />
