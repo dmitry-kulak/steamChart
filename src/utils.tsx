@@ -49,3 +49,13 @@ export const colors = {
   steamConcurrentOnline: "#198038",
   steamConcurrentInGame: "#002d9c",
 };
+
+const escape = (x: string) => {
+  // https://www.npmjs.com/package/escape-string-regexp
+  return "\\^$*+?.()|{}[]".includes(x) ? "\\" + x : x
+}
+
+export const filterItem = (inputText: string, marketHashName: string, marketName: string | null) => {
+  const regex = new RegExp(inputText.split("").map(x => "(" + escape(x) + ").*").join(""), 'gi')
+  return Boolean(marketHashName.match(regex)) || Boolean((marketName || "").match(regex))
+}

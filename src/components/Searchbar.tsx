@@ -3,7 +3,7 @@ import { Link, Redirect } from "react-router-dom";
 import { Option } from "react-dropdown";
 
 import { ItemInformation } from "../types";
-import { fetchWithErrorCheck } from "../utils";
+import { fetchWithErrorCheck, filterItem } from "../utils";
 import DropdownButton from "./DropdownButton";
 import "./Searchbar.css";
 
@@ -67,14 +67,7 @@ const Searchbar = ({
   // filter by text input
   useEffect(() => {
     const list = itemList!.filter((item: ItemInformation) => {
-      if (text) {
-        return (
-          // I hate my life for this snippet of code
-          // if there's no russian name for item (marketName) it doesn't render it
-          item.marketHashName.toLowerCase().includes(text.toLowerCase()) ||
-          (item.marketName || "").toLowerCase().includes(text.toLowerCase())
-        );
-      } else return null;
+      return filterItem(text, item.marketHashName, item.marketName)
     });
 
     setSearchResults(mapList(list));
