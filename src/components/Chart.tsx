@@ -224,7 +224,10 @@ class Chart extends React.Component<ChartProps, ChartState> {
         data: this.state.itemData.ordersRub,
         label: "Запросы на покупку",
         type: "line",
-        backgroundColor: "rgb(54, 62, 23)",
+        fill: {
+          target: "origin",
+        },
+        backgroundColor: colors.ordersBackground,
         borderColor: colors.orders,
         yAxisID: "y-axis-steam",
       });
@@ -235,7 +238,10 @@ class Chart extends React.Component<ChartProps, ChartState> {
         data: this.state.itemData.ordersRub,
         label: "Запросы на покупку",
         type: "line",
-        backgroundColor: "rgb(82, 74, 65)",
+        fill: {
+          target: "origin",
+        },
+        backgroundColor: colors.ordersBackground,
         borderColor: colors.orders,
         yAxisID: "y-axis-steam",
       });
@@ -246,7 +252,10 @@ class Chart extends React.Component<ChartProps, ChartState> {
         data: this.state.itemData.lotsRub,
         label: "Лотов в продаже",
         type: "line",
-        backgroundColor: "rgb(98, 71, 95)",
+        fill: {
+          target: "origin",
+        },
+        backgroundColor: colors.lotsBackground,
         borderColor: colors.lots,
         yAxisID: "y-axis-steam",
       });
@@ -257,7 +266,10 @@ class Chart extends React.Component<ChartProps, ChartState> {
         data: this.state.itemData.lotsUsd,
         label: "Лотов в продаже",
         type: "line",
-        backgroundColor: "rgb(54, 62, 17)",
+        fill: {
+          target: "origin",
+        },
+        backgroundColor: colors.lotsBackground,
         borderColor: colors.lots,
         yAxisID: "y-axis-steam",
       });
