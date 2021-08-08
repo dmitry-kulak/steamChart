@@ -1,6 +1,7 @@
 import React from "react";
 
 import { FormValues } from "../types";
+import "./ItemForm.css";
 
 const ItemForm = ({
   formData,
@@ -24,8 +25,8 @@ const ItemForm = ({
   return (
     <form>
       <div className="currency">
+        <div>Валюта:</div>
         <label>
-          Валюта:
           <input
             type="radio"
             name="currency"
@@ -47,6 +48,25 @@ const ItemForm = ({
         </label>
       </div>
       <div className="checkboxes">
+        <div>Рынок:</div>
+        <label>
+          <input
+            type="checkbox"
+            name="price"
+            checked={true}
+            disabled={true}
+          />
+          Цена
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="deals"
+            checked={formData.deals}
+            onChange={(e) => handleInputChange(e)}
+          />
+          Количество сделок
+        </label>
         <label>
           <input
             type="checkbox"
@@ -65,20 +85,10 @@ const ItemForm = ({
           />
           Лотов на продажу
         </label>
-        <label>
-          <input
-            type="checkbox"
-            name="deals"
-            checked={formData.deals}
-            onChange={(e) => handleInputChange(e)}
-          />
-          Количество сделок
-        </label>
       </div>
 
-      <br />
-
       <div className="people">
+        <div>Игра (CS:GO):</div>
         <label>
           <input
             type="checkbox"
@@ -86,7 +96,7 @@ const ItemForm = ({
             checked={formData.players}
             onChange={(e) => handleInputChange(e)}
           />
-          Количество в игре (CS:GO)
+          Количество в игре
         </label>
         <label>
           <input
@@ -95,17 +105,12 @@ const ItemForm = ({
             checked={formData.twitchViewers}
             onChange={(e) => handleInputChange(e)}
           />
-          Количество зрителей в Twitch (CS:GO)
+          Количество зрителей в Twitch
         </label>
-        <label>
-          <input
-            type="checkbox"
-            name="steamOnline"
-            checked={formData.steamOnline}
-            onChange={(e) => handleInputChange(e)}
-          />
-          Общий онлайн Steam
-        </label>
+      </div>
+
+      <div className="people">
+        <div>Steam:</div>
         <label>
           <input
             type="checkbox"
@@ -114,6 +119,15 @@ const ItemForm = ({
             onChange={(e) => handleInputChange(e)}
           />
           Общее количество играющих
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="steamOnline"
+            checked={formData.steamOnline}
+            onChange={(e) => handleInputChange(e)}
+          />
+          Общий онлайн
         </label>
       </div>
     </form>
