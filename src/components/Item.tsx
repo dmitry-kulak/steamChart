@@ -71,10 +71,9 @@ const Item = ({
 
   return (
     <div className='item'>
-      <h3>
-        {itemInformation?.marketHashName}{" "}
-        {itemInformation?.marketName ? `| ${itemInformation?.marketName}` : null}
-      </h3>
+      <h1 title={itemInformation?.marketHashName}>
+        {itemInformation?.marketName ? itemInformation?.marketName : itemInformation?.marketHashName}
+      </h1>
       <ItemForm formData={formData} setFormData={setFormData} />
       <Chart
         isLogged={isLogged}
