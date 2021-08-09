@@ -3,18 +3,22 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import { CryptoXor } from "crypto-xor";
 
-import { ChartProps, ChartState, ItemData, ItemDataResponse } from "../../types";
+import {
+  ChartProps,
+  ChartState,
+  ItemData,
+  ItemDataResponse,
+} from "../../types";
 import { fetchWithErrorCheck, colors } from "../../utils";
-import { Line, Chart as Chartjs, } from "react-chartjs-2";
+import { Line, Chart as Chartjs } from "react-chartjs-2";
 import "chartjs-adapter-date-fns";
 import zoomPlugin from "chartjs-plugin-zoom";
 // @ts-ignore
 import { CrosshairPlugin } from "chartjs-plugin-crosshair";
 
-import './Chart.css'
+import "./Chart.css";
 
-
-Chartjs.register([ zoomPlugin]);
+Chartjs.register([zoomPlugin]);
 
 class Chart extends React.Component<ChartProps, ChartState> {
   state: ChartState = {
@@ -58,7 +62,7 @@ class Chart extends React.Component<ChartProps, ChartState> {
           position: "right",
           title: {
             display: true,
-            text: `Цена, ${this.props.formData.currency === "rub" ? "₽" : "$"}`,
+            text: "Цена",
           },
         },
         "y-axis-steam": {
@@ -84,7 +88,6 @@ class Chart extends React.Component<ChartProps, ChartState> {
       },
 
       plugins: {
-        
         crosshair: {
           line: {
             color: "black",
@@ -107,6 +110,7 @@ class Chart extends React.Component<ChartProps, ChartState> {
               enabled: true,
             },
           },
+          limits: { x: { max: new Date().getTime() } },
         },
       },
     },
@@ -122,7 +126,6 @@ class Chart extends React.Component<ChartProps, ChartState> {
     if (!this.props.isLogged) return <Redirect push to="/login" />;
 
     let data = await response.json();
-
     const startDate = data.startDate;
     // const maxPriceRub = data.maxPriceRub;
     // const maxPriceUsd = data.maxPriceUsd;
@@ -175,14 +178,6 @@ class Chart extends React.Component<ChartProps, ChartState> {
       },
     });
   };
-//   #1929d4
-// #7f10c4
-// #ad00b2
-// #cc00a0
-// #e2148f
-// #f13881
-// #fa5576
-// #ff7070
 
   updateDealsSeries = (props: any) => {
     let newSeriesDeals = [];
@@ -194,7 +189,6 @@ class Chart extends React.Component<ChartProps, ChartState> {
         type: "line",
         borderColor: colors.curr,
         yAxisID: "y-axis-currency",
-
       });
     }
 
@@ -337,36 +331,15 @@ class Chart extends React.Component<ChartProps, ChartState> {
         },
         options: {
           ...this.state.options,
-          scales: {
-            x: { type: "time" },
-            "y-axis-currency": {
-              min: 0,
-              // max:
-              //   this.props.formData.currency === "rub"
-              //     ? this.state.itemData.maxPriceRub
-              //     : this.state.itemData.maxPriceUsd,
-              position: "right",
-              title: {
-                display: true,
-                text: `Цена, ${
-                  this.props.formData.currency === "rub" ? "₽" : "$"
-                }`,
-              },
-            },
-            "y-axis-steam": {
-              min: 0,
-              // max: this.state.itemData.maxSteam,
-              title: {
-                display: true,
-                text: "Количество запросов/лотов/сделок",
-              },
-            },
-            "y-axis-steamdb": {
-              min: 0,
-              // max: this.state.itemData.maxSteamdb,
-              title: {
-                display: true,
-                text: "Количество человек",
+          plugins: {
+            ...this.state.options.plugins,
+            zoom: {
+              ...this.state.options.plugins.zoom,
+              limits: {
+                x: {
+                  ...this.state.options.plugins.zoom.limits.x,
+                  min: this.state.itemData.startDate,
+                },
               },
             },
           },
@@ -409,7 +382,7 @@ class Chart extends React.Component<ChartProps, ChartState> {
 
   render() {
     return (
-      <div className='chart'>
+      <div className="chart">
         <Line options={this.state.options} data={this.state.data} />
       </div>
     );
