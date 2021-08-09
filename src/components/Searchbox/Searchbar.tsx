@@ -81,19 +81,19 @@ const Searchbar = ({
   useEffect(() => {
     let list: ItemInformation[] = itemList!;
 
-    if (!(itemCategory.value === "Любая категория")) {
+    if (itemCategory.value !== "Любая категория") {
       list = itemList!.filter((item: ItemInformation) => {
         return (
           itemCategory.value === "Любая категория" ||
-          item.itemCategory === itemCategory.value
+          itemCategory.value === item.itemCategory
         );
       });
     }
 
-    if (!(itemType.value === "Любой тип")) {
+    if (itemType.value !== "Любой тип") {
       list = itemList!.filter((item: ItemInformation) => {
         return (
-          itemType.value === "Любой тип" || item.itemType === itemType.value
+          itemType.value === "Любой тип" || itemType.value === item.itemType
         );
       });
     }

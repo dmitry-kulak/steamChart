@@ -45,7 +45,7 @@ const DropdownButton = ({
     options = itemList!.map((item) => {
       if (
         itemCategory?.value === "Любая категория" ||
-        item.itemCategory === itemCategory?.value
+        itemCategory?.value === item.itemCategory
       ) {
         return item.itemType || "Без типа";
       } else {
@@ -61,20 +61,15 @@ const DropdownButton = ({
 
     defaultOption = options[0];
 
-    // I really don't like it
-    let value = itemType || defaultOption;
-
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
-      console.log('dropdown')
-
       setItemType({
         label: "Любой тип",
         value: "Любой тип",
       });
     }, [itemCategory, setItemType]);
 
-    return <Dropdown onChange={setItemType} value={value} options={options} />;
+    return <Dropdown onChange={setItemType} value={itemType || defaultOption} options={options} />;
   }
 };
 
