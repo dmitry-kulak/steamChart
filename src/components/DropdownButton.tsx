@@ -25,8 +25,9 @@ const DropdownButton = ({
     // Category is selected
 
     options = itemList!.map((item) => item.itemCategory || "Без категории");
-    options.unshift("Любая категория");
     options = [...new Set(options)];
+    options.sort();
+    options.unshift("Любая категория");
 
     defaultOption = options[0];
 
@@ -48,11 +49,12 @@ const DropdownButton = ({
         return ""; // Remove later
       }
     })
-    options.unshift("Любой тип");
     options = [...new Set(options)];
     if (options.includes("")) {
       options.splice(options.indexOf(""), 1); // Removed
     }
+    options.sort();
+    options.unshift("Любой тип");
 
     defaultOption = options[0];
 
