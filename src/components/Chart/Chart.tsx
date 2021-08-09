@@ -50,7 +50,7 @@ class Chart extends React.Component<ChartProps, ChartState> {
       },
 
       scales: {
-        x: { type: "time" },
+        x: { type: "time", ticks: {maxRotation: 0, autoSkipPadding: 10} },
         "y-axis-currency": {
           min: 0,
           position: "right",
