@@ -34,10 +34,6 @@ export interface ItemData {
   gameConcurrentTwitchViewers: number[];
   steamConcurrentInGame: number[];
   startDate: number | null;
-  // maxPriceRub: number | null;
-  // maxPriceUsd: number | null;
-  // maxSteam: number | null;
-  // maxSteamdb: number | null;
 }
 
 export interface ItemDataResponse extends ItemData {

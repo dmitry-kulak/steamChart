@@ -2,6 +2,8 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import { CryptoXor } from "crypto-xor";
+import { Line, Chart as Chartjs } from "react-chartjs-2";
+import "chartjs-adapter-date-fns";
 
 import {
   ChartProps,
@@ -10,11 +12,7 @@ import {
   ItemDataResponse,
 } from "../../types";
 import { fetchWithErrorCheck, colors } from "../../utils";
-import { Line, Chart as Chartjs } from "react-chartjs-2";
-import "chartjs-adapter-date-fns";
 import zoomPlugin from "chartjs-plugin-zoom";
-// @ts-ignore
-import { CrosshairPlugin } from "chartjs-plugin-crosshair";
 
 import "./Chart.css";
 
@@ -36,10 +34,6 @@ class Chart extends React.Component<ChartProps, ChartState> {
       gameConcurrentTwitchViewers: [],
       steamConcurrentInGame: [],
       startDate: null,
-      // maxPriceRub: null,
-      // maxPriceUsd: null,
-      // maxSteam: null,
-      // maxSteamdb: null,
     },
 
     data: {
@@ -127,10 +121,6 @@ class Chart extends React.Component<ChartProps, ChartState> {
 
     let data = await response.json();
     const startDate = data.startDate;
-    // const maxPriceRub = data.maxPriceRub;
-    // const maxPriceUsd = data.maxPriceUsd;
-    // const maxSteam = data.maxSteam;
-    // const maxSteamdb = data.maxSteamdb;
 
     data = CryptoXor.decrypt(data.data, "testPass");
     data = JSON.parse(data);
@@ -171,10 +161,6 @@ class Chart extends React.Component<ChartProps, ChartState> {
         gameConcurrentTwitchViewers: gameConcurrentTwitchViewers,
         steamConcurrentInGame: steamConcurrentInGame,
         startDate: startDate,
-        // maxPriceRub: maxPriceRub,
-        // maxPriceUsd: maxPriceUsd,
-        // maxSteam: maxSteam,
-        // maxSteamdb: maxSteamdb,
       },
     });
   };
