@@ -22,12 +22,12 @@ const Searchbar = ({
 }) => {
   const [text, setText] = useState<string>("");
   const [itemCategory, setItemCategory] = useState<Option>({
-    label: "Категория",
-    value: "Категория",
+    label: "Любая категория",
+    value: "Любая категория",
   });
   const [itemType, setItemType] = useState<Option>({
-    label: "Тип",
-    value: "Тип",
+    label: "Любой тип",
+    value: "Любой тип",
   });
   const [searchResults, setSearchResults] = useState<JSX.Element[]>([]);
 
@@ -76,9 +76,7 @@ const Searchbar = ({
   // filter by category
   useEffect(() => {
     const list = itemList!.filter((item: ItemInformation) => {
-      if (text) {
-        return item.itemCategory.includes(itemCategory.value);
-      } else return null;
+      return itemCategory.value === "Любая категория" || item.itemCategory === itemCategory.value;
     });
 
     setSearchResults(mapList(list));
@@ -87,9 +85,7 @@ const Searchbar = ({
   // filter by type
   useEffect(() => {
     const list = itemList!.filter((item: ItemInformation) => {
-      if (text) {
-        return item.itemType.includes(itemType.value);
-      } else return null;
+      return itemType.value === "Любой тип" || item.itemType === itemType.value;
     });
 
     setSearchResults(mapList(list));

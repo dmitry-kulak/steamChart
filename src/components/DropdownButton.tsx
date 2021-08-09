@@ -22,6 +22,8 @@ const DropdownButton = ({
   let defaultOption;
 
   if (setItemCategory) {
+    // Category is selected
+
     options = itemList!.map((item) => item.itemCategory || "Без категории");
     options.unshift("Любая категория");
     options = [...new Set(options)];
@@ -36,9 +38,21 @@ const DropdownButton = ({
       />
     );
   } else {
-    options = itemList!.map((item) => item.itemType || "Без типа");
+    // Type is selected
+
+    // Filter types belonging to the selected category
+    options = itemList!.map((item) => {
+      if (itemCategory?.value === "Любая категория" || item.itemCategory === itemCategory?.value) {
+        return item.itemType || "Без типа";
+      } else {
+        return ""; // Remove later
+      }
+    })
     options.unshift("Любой тип");
     options = [...new Set(options)];
+    if (options.includes("")) {
+      options.splice(options.indexOf(""), 1); // Removed
+    }
 
     defaultOption = options[0];
 
