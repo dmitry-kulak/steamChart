@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Dropdown, { Option } from "react-dropdown";
 
 import "react-dropdown/style.css";
-import "./DropdownButton.css"
+import "./DropdownButton.css";
 import { ItemInformation } from "../../types";
 
 const DropdownButton = ({
@@ -43,12 +43,15 @@ const DropdownButton = ({
 
     // Filter types belonging to the selected category
     options = itemList!.map((item) => {
-      if (itemCategory?.value === "Любая категория" || item.itemCategory === itemCategory?.value) {
+      if (
+        itemCategory?.value === "Любая категория" ||
+        item.itemCategory === itemCategory?.value
+      ) {
         return item.itemType || "Без типа";
       } else {
         return ""; // Remove later
       }
-    })
+    });
     options = [...new Set(options)];
     if (options.includes("")) {
       options.splice(options.indexOf(""), 1); // Removed
@@ -58,13 +61,20 @@ const DropdownButton = ({
 
     defaultOption = options[0];
 
-    return (
-      <Dropdown
-        onChange={setItemType}
-        value={itemType || defaultOption}
-        options={options}
-      />
-    );
+    // I really don't like it
+    let value = itemType || defaultOption;
+
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useEffect(() => {
+      console.log('dropdown')
+
+      setItemType({
+        label: "Любой тип",
+        value: "Любой тип",
+      });
+    }, [itemCategory, setItemType]);
+
+    return <Dropdown onChange={setItemType} value={value} options={options} />;
   }
 };
 

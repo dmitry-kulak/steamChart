@@ -3,7 +3,11 @@ import { Link, Redirect } from "react-router-dom";
 import { Option } from "react-dropdown";
 
 import { ItemInformation } from "../../types";
-import { fetchWithErrorCheck, filterItem, highlightEnglishChars } from "../../utils";
+import {
+  fetchWithErrorCheck,
+  filterItem,
+  highlightEnglishChars,
+} from "../../utils";
 import DropdownButton from "../DropdownButton/DropdownButton";
 import "./Searchbar.css";
 
@@ -67,7 +71,7 @@ const Searchbar = ({
   // filter by text input
   useEffect(() => {
     const list = itemList!.filter((item: ItemInformation) => {
-      return filterItem(text, item.marketHashName, item.marketName)
+      return filterItem(text, item.marketHashName, item.marketName);
     });
 
     setSearchResults(mapList(list));
@@ -75,21 +79,36 @@ const Searchbar = ({
 
   // filter by category
   useEffect(() => {
-    const list = itemList!.filter((item: ItemInformation) => {
-      return itemCategory.value === "Любая категория" || item.itemCategory === itemCategory.value;
-    });
+    let list: ItemInformation[] = itemList!;
+
+    if (!(itemCategory.value === "Любая категория")) {
+      list = itemList!.filter((item: ItemInformation) => {
+        return (
+          itemCategory.value === "Любая категория" ||
+          item.itemCategory === itemCategory.value
+        );
+      });
+    }
+
+    if (!(itemType.value === "Любой тип")) {
+      list = itemList!.filter((item: ItemInformation) => {
+        return (
+          itemType.value === "Любой тип" || item.itemType === itemType.value
+        );
+      });
+    }
 
     setSearchResults(mapList(list));
-  }, [itemList, itemCategory, setSearchResults]);
+  }, [itemList, itemCategory, itemType, setSearchResults]);
 
   // filter by type
-  useEffect(() => {
-    const list = itemList!.filter((item: ItemInformation) => {
-      return itemType.value === "Любой тип" || item.itemType === itemType.value;
-    });
+  // useEffect(() => {
+  //   const list = itemList!.filter((item: ItemInformation) => {
+  //     return itemType.value === "Любой тип" || item.itemType === itemType.value;
+  //   });
 
-    setSearchResults(mapList(list));
-  }, [itemList, itemType, setSearchResults]);
+  //   setSearchResults(mapList(list));
+  // }, [itemList, itemType, setSearchResults]);
 
   if (!isLogged) return <Redirect push to="/login" />;
 
