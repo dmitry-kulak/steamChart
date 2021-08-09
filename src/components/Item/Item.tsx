@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 
-import { FormValues, ItemInformation } from "../types";
+import { FormValues, ItemInformation } from "../../types";
 
-import Chart from "./Chart";
-import ItemForm from "./ItemForm";
+import Chart from "../Chart/Chart";
+import ItemForm from "../ItemForm/ItemForm";
 import "./Item.css";
 
 const Item = ({

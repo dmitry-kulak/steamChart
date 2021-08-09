@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { Option } from "react-dropdown";
 
-import { ItemInformation } from "../types";
-import { fetchWithErrorCheck, filterItem, highlightEnglishChars } from "../utils";
-import DropdownButton from "./DropdownButton";
+import { ItemInformation } from "../../types";
+import { fetchWithErrorCheck, filterItem, highlightEnglishChars } from "../../utils";
+import DropdownButton from "../DropdownButton/DropdownButton";
 import "./Searchbar.css";
 
 const Searchbar = ({

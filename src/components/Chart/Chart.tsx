@@ -3,8 +3,8 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import { CryptoXor } from "crypto-xor";
 
-import { ChartProps, ChartState, ItemData, ItemDataResponse } from "../types";
-import { fetchWithErrorCheck, colors } from "../utils";
+import { ChartProps, ChartState, ItemData, ItemDataResponse } from "../../types";
+import { fetchWithErrorCheck, colors } from "../../utils";
 import { Line, Chart as Chartjs, } from "react-chartjs-2";
 import "chartjs-adapter-date-fns";
 import zoomPlugin from "chartjs-plugin-zoom";

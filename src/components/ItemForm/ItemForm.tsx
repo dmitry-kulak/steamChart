@@ -1,6 +1,6 @@
 import React from "react";
 
-import { FormValues } from "../types";
+import { FormValues } from "../../types";
 import "./ItemForm.css";
 
 const ItemForm = ({

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-import Searchbar from "./components/Searchbar";
+import Searchbar from "./components/Searchbox/Searchbar";
 import { ItemInformation } from "./types";
-import Item from "./components/Item";
-import Login from "./components/Login";
+import Item from "./components/Item/Item";
+import Login from "./components/Login/Login";
 import { fetchWithErrorCheck } from "./utils";
 import "./App.css";
 
