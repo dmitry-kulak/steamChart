@@ -213,8 +213,7 @@ class Chart extends React.Component<ChartProps, ChartState> {
         data: this.state.itemData.dealsQty,
         label: "Количество сделок",
         type: "line",
-        backgroundColor: colors.deals,
-        borderColor: "rgba(127, 16, 196, 0.6)",
+        borderColor: colors.deals,
         yAxisID: "y-axis-steam",
       });
     }
