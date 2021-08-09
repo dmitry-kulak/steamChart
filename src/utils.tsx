@@ -60,7 +60,7 @@ export const filterItem = (inputText: string, marketHashName: string, marketName
   return Boolean(marketHashName.match(regex)) || Boolean((marketName || "").match(regex))
 }
 
-export const formatText = (s: string) => {
+export const highlightEnglishChars = (s: string) => {
   // Выделить английские символы жирным шрифтом
 
   let c

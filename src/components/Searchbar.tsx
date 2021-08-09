@@ -3,7 +3,7 @@ import { Link, Redirect } from "react-router-dom";
 import { Option } from "react-dropdown";
 
 import { ItemInformation } from "../types";
-import { fetchWithErrorCheck, filterItem, formatText } from "../utils";
+import { fetchWithErrorCheck, filterItem, highlightEnglishChars } from "../utils";
 import DropdownButton from "./DropdownButton";
 import "./Searchbar.css";
 
@@ -36,7 +36,7 @@ const Searchbar = ({
       return (
         <li key={item.id}>
           <Link onClick={() => setText("")} to={`/item/${String(item.id)}`}>
-            {formatText(item.marketName || item.marketHashName)}
+            {highlightEnglishChars(item.marketName || item.marketHashName)}
           </Link>
         </li>
       );
