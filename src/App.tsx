@@ -7,6 +7,7 @@ import Item from "./components/Item/Item";
 import Login from "./components/Login/Login";
 import { fetchWithErrorCheck } from "./utils";
 import "./App.css";
+import { Home, Logout } from "./components/Icon/Icon";
 
 const IS_LOGGED = Boolean(localStorage.getItem('IS_LOGGED'))
 
@@ -26,7 +27,9 @@ const App = () => {
 
   const renderLoginButton = () => {
     if (isLogged) {
-      return <button onClick={logout}>Выйти</button>;
+      return <div onClick={logout} title="Выйти">
+        <Logout />
+      </div>
     }
   };
 
@@ -34,9 +37,9 @@ const App = () => {
     <Router>
       <div className="container">
         <nav className="navbar">
-          <button>
-            <Link to="/">Домой</Link>
-          </button>
+          <Link to="/" title="Домой">
+            <Home />
+          </Link>
           <Searchbar
             isLogged={isLogged}
             setIsLogged={setIsLogged}
