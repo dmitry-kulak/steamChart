@@ -43,6 +43,7 @@ class Chart extends React.Component<ChartProps, ChartState> {
       datasets: [],
     },
     options: {
+      spanGaps: true,
       responsive: true,
       maintainAspectRatio: false,
       animation: false,
