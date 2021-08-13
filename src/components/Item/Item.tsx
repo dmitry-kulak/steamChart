@@ -39,7 +39,7 @@ const Item = ({
     setItemInformation(itemFromId);
   }, [itemList, id, formData]);
 
-  // setFormData from ulr if there's any query parameters
+  // setFormData from URL if there's any query parameters
   // eg you clicked link with parameters
   const query = new URLSearchParams(useLocation().search);
   useEffect(() => {

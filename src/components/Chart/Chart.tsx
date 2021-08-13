@@ -306,63 +306,63 @@ class Chart extends React.Component<ChartProps, ChartState> {
   async componentDidMount() {
     await this.fetchData();
 
-    if (this.props.isLogged) {
-      this.setState({
-        data: {
-          labels: this.state.itemData.dates,
-          datasets: [
-            ...this.updateDealsSeries(this.props.formData),
-            ...this.updateUsersSeries(this.props.formData),
-          ],
-        },
-        options: {
-          ...this.state.options,
-          plugins: {
-            ...this.state.options.plugins,
-            zoom: {
-              ...this.state.options.plugins.zoom,
-              limits: {
-                x: {
-                  ...this.state.options.plugins.zoom.limits.x,
-                  min: this.state.itemData.startDate,
-                },
+    if (!this.props.isLogged) {
+      return;
+    }
+
+    this.setState({
+      data: {
+        labels: this.state.itemData.dates,
+        datasets: [
+          ...this.updateDealsSeries(this.props.formData),
+          ...this.updateUsersSeries(this.props.formData),
+        ],
+      },
+      options: {
+        ...this.state.options,
+        plugins: {
+          ...this.state.options.plugins,
+          zoom: {
+            ...this.state.options.plugins.zoom,
+            limits: {
+              x: {
+                ...this.state.options.plugins.zoom.limits.x,
+                min: this.state.itemData.startDate,
               },
             },
           },
         },
-      });
-    }
+      },
+    });
   }
 
   async componentDidUpdate(prevProps: ChartProps) {
+    let flag = false;
+
     if (
       JSON.stringify(prevProps.formData) !== JSON.stringify(this.props.formData)
     ) {
-      this.setState({
-        data: {
-          labels: this.state.itemData.dates,
-          datasets: [
-            ...this.updateDealsSeries(this.props.formData),
-            ...this.updateUsersSeries(this.props.formData),
-          ],
-        },
-      });
+      flag = true;
     }
 
     if (prevProps.id !== this.props.id) {
       await this.fetchData();
 
       if (this.props.isLogged) {
-        this.setState({
-          data: {
-            labels: this.state.itemData.dates,
-            datasets: [
-              ...this.updateDealsSeries(this.props.formData),
-              ...this.updateUsersSeries(this.props.formData),
-            ],
-          },
-        });
+        flag = true;
       }
+    }
+
+    if (flag) {
+      this.setState({
+        data: {
+          labels: this.state.itemData.dates,
+          datasets: [
+            ...this.updateDealsSeries(this.props.formData),
+            ...this.updateUsersSeries(this.props.formData),
+          ],
+        },
+      });
     }
   }
 
