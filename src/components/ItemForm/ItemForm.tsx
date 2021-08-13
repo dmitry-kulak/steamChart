@@ -130,6 +130,60 @@ const ItemForm = ({
           Общий онлайн
         </label>
       </div>
+
+      <div>
+        <div>Масштаб:</div>
+        <label>
+          <input
+            type="radio"
+            name="scale"
+            value="week"
+            checked={formData.scale === "week"}
+            onChange={(e) => handleInputChange(e)}
+          />
+          Неделя
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="scale"
+            value="month"
+            checked={formData.scale === "month"}
+            onChange={(e) => handleInputChange(e)}
+          />
+          Месяц
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="scale"
+            value="half-year"
+            checked={formData.scale === "half-year"}
+            onChange={(e) => handleInputChange(e)}
+          />
+          Пол года
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="scale"
+            value="year"
+            checked={formData.scale === "year"}
+            onChange={(e) => handleInputChange(e)}
+          />
+          Год
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="scale"
+            value="lifetime"
+            checked={formData.scale === "lifetime"}
+            onChange={(e) => handleInputChange(e)}
+          />
+          Все время
+        </label>
+      </div>
     </form>
   );
 };

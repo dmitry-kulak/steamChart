@@ -75,3 +75,28 @@ export const highlightEnglishChars = (s: string) => {
   }
   return <span dangerouslySetInnerHTML={{__html: result}} />
 }
+
+export const getTimePeriod = (value: string, min: number | null) => {
+    const max = new Date().getTime();
+
+    let offset = 1000 * 60 * 60 * 24;
+    switch (value) {
+      case "week":
+        offset *= 7;
+        break;
+      case "month":
+        offset *= 30;
+        break;
+      case "half-year":
+        offset *= 182;
+        break;
+      case "year":
+        offset *= 365;
+        break;
+      case "lifetime":
+        offset = 0;
+        break;
+    }
+
+    return [offset ? max - offset : min, max]
+  };

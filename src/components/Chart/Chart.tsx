@@ -11,7 +11,7 @@ import {
   ItemData,
   ItemDataResponse,
 } from "../../types";
-import { fetchWithErrorCheck, colors } from "../../utils";
+import {fetchWithErrorCheck, colors, getTimePeriod} from "../../utils";
 import zoomPlugin from "chartjs-plugin-zoom";
 
 import "./Chart.css";
@@ -19,6 +19,8 @@ import "./Chart.css";
 Chartjs.register([zoomPlugin]);
 
 class Chart extends React.Component<ChartProps, ChartState> {
+  componentRef: React.RefObject<unknown> = React.createRef();
+
   state: ChartState = {
     itemData: {
       dates: [],
@@ -303,6 +305,28 @@ class Chart extends React.Component<ChartProps, ChartState> {
     return newSeriesUsers;
   };
 
+  updateZoom = () => {
+    if (!this.componentRef.current) {
+      return
+    }
+
+    setTimeout(() => {
+      // Does not work outside of setTimeout
+
+      const[min, max] = getTimePeriod(
+          this.props.formData.scale,
+          this.state.itemData.startDate
+      );
+      // @ts-ignore
+      this.componentRef.current.zoomScale('x', {min: min, max: max}, 'default');
+      // @ts-ignore
+      this.componentRef.current.update()
+
+      document.getElementsByClassName("chart")[0].classList.remove("hide") // hack
+
+    }, 0.000001)
+  }
+
   async componentDidMount() {
     await this.fetchData();
 
@@ -310,6 +334,7 @@ class Chart extends React.Component<ChartProps, ChartState> {
       return;
     }
 
+    document.getElementsByClassName("chart")[0].classList.add("hide") // hack
     this.setState({
       data: {
         labels: this.state.itemData.dates,
@@ -334,6 +359,7 @@ class Chart extends React.Component<ChartProps, ChartState> {
         },
       },
     });
+    this.updateZoom();
   }
 
   async componentDidUpdate(prevProps: ChartProps) {
@@ -354,6 +380,7 @@ class Chart extends React.Component<ChartProps, ChartState> {
     }
 
     if (flag) {
+      document.getElementsByClassName("chart")[0].classList.add("hide") // hack
       this.setState({
         data: {
           labels: this.state.itemData.dates,
@@ -363,13 +390,14 @@ class Chart extends React.Component<ChartProps, ChartState> {
           ],
         },
       });
+      this.updateZoom();
     }
   }
 
   render() {
     return (
       <div className="chart">
-        <Line options={this.state.options} data={this.state.data} />
+        <Line ref={this.componentRef} options={this.state.options} data={this.state.data} />
       </div>
     );
   }

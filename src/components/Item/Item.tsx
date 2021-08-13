@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 
 import { FormValues, ItemInformation } from "../../types";
@@ -16,6 +16,8 @@ const Item = ({
   isLogged: boolean;
   setIsLogged: any;
 }) => {
+  const componentRef = useRef(null) as React.MutableRefObject<null>;
+
   // id from url
   const { id } = useParams<{ id: string }>();
   const [itemInformation, setItemInformation] = useState<ItemInformation | undefined>();
@@ -28,6 +30,7 @@ const Item = ({
     twitchViewers: false,
     steamOnline: false,
     totalPlayers: false,
+    scale: "lifetime",
   });
 
   // find item in data array by id from url
@@ -80,6 +83,7 @@ const Item = ({
         setIsLogged={setIsLogged}
         formData={formData}
         id={id}
+        ref={componentRef}
       />
     </div>
   );

@@ -15,3 +15,7 @@ form label, form input {
 form div div {
   padding-bottom: 5px;
 }
+
+.hide {
+  visibility: hidden;
+}
