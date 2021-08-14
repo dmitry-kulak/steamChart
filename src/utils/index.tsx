@@ -61,15 +61,31 @@ export const filterItem = (inputText: string, marketHashName: string, marketName
 }
 
 export const highlightEnglishChars = (s: string) => {
-  // Выделить английские символы жирным шрифтом
+  // Выделить английские символы (иногда - пробелы) жирным шрифтом
 
   let c
   let result = ``
+  let opened = false
   for (let i = 0; i < s.length; i++) {
     c = s[i].charCodeAt(0)
     if ((c >= 97 && c <= 122) || (c >= 65 && c <= 90)) { // a-z or A-Z
-      result += `<span class="english-letter">${s[i]}</span>`
+      if (!opened) {
+        result += `<span class="english-letter">`
+        opened = true
+      }
+      result += s[i]
     } else {
+      if (c === 32 && opened) {
+        // Пробел после латинского символа
+        // Если следующий символ тоже латинский, то закрывать тег не ффективно
+
+        result += s[i]
+        continue
+      }
+      if (opened) {
+        result += `</span>`
+        opened = false
+      }
       result += s[i]
     }
   }
