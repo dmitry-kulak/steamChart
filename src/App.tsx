@@ -69,6 +69,13 @@ const App = () => {
               <Login isLogged={isLogged} setIsLogged={setIsLogged} />
             )}
           />
+          <Route
+            exact
+            path="/"
+            render={(props) => (
+              <div className="message">Предмет не выбран.</div>
+            )}
+          />
         </Switch>
       </div>
     </Router>
