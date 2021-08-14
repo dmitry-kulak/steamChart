@@ -364,6 +364,10 @@ class Chart extends React.Component<ChartProps, ChartState> {
   }
 
   async componentDidUpdate(prevProps: ChartProps) {
+    if (!this.props.isLogged) {
+      return;
+    }
+
     let flag = false;
 
     if (
@@ -374,10 +378,7 @@ class Chart extends React.Component<ChartProps, ChartState> {
 
     if (prevProps.id !== this.props.id) {
       await this.fetchData();
-
-      if (this.props.isLogged) {
-        flag = true;
-      }
+      flag = true;
     }
 
     if (flag) {
