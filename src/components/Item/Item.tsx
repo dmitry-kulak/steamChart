@@ -72,10 +72,18 @@ const Item = ({
     history.push({ search: params.toString() });
   }, [formData, history]);
 
+  const fmtHeader = () => {
+    if (!itemInformation) {
+      return 'Загрузка ...';
+    }
+
+    return itemInformation?.marketName ? itemInformation?.marketName : itemInformation?.marketHashName;
+  }
+
   return (
     <div className='item'>
       <h3 title={itemInformation?.marketHashName}>
-        {itemInformation?.marketName ? itemInformation?.marketName : itemInformation?.marketHashName}
+        {fmtHeader()}
       </h3>
       <ItemForm formData={formData} setFormData={setFormData} />
       <Chart
