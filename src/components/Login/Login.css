@@ -65,3 +65,7 @@
 .login-container button:hover {
   background-color: rgb(50, 151, 96);
 }
+
+.login-container button {
+  cursor: pointer;
+}
