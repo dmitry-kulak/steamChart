@@ -7,7 +7,7 @@ import Item from "./components/Item/Item";
 import Login from "./components/Login/Login";
 import { fetchWithErrorCheck } from "./utils";
 import "./App.css";
-import { Home, Logout } from "./components/Icon/Icon";
+import { Home, Logout, LoginIcon } from "./components/Icon/Icon";
 
 const IS_LOGGED = Boolean(localStorage.getItem('IS_LOGGED'))
 
@@ -30,6 +30,8 @@ const App = () => {
       return <div onClick={logout} title="Выйти">
         <Logout />
       </div>
+    } else {
+      return <Link to="/login"><LoginIcon /></Link>
     }
   };
 
