@@ -16,6 +16,4 @@ app.get('/api/chart/:id', (req, res) => {
   return res.send(itemsData.find((item) => item.id === Number(req.params.id)));
 });
 
-app.listen(3001, () => {
-  console.log('Server is listening on port 3001');
-});
+app.listen(process.env.PORT || 3001);
