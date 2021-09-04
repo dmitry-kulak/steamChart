@@ -1,46 +1,32 @@
-import React, { useEffect, useState } from "react";
-import { Link, Redirect } from "react-router-dom";
-import { Option } from "react-dropdown";
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Option } from 'react-dropdown';
 
-import { ItemInformation } from "../../types";
-import {
-  fetchWithErrorCheck,
-  filterItem,
-  highlightEnglishChars,
-} from "../../utils";
-import DropdownButton from "../DropdownButton/DropdownButton";
-import "./Searchbar.css";
+import { ItemInformation, SearchbarProps } from '../../types';
+import { filterItem } from '../../utils';
+import DropdownButton from '../DropdownButton/DropdownButton';
+import './Searchbar.css';
 
-const Searchbar = ({
-  itemList,
-  setItemList,
-  isLogged,
-  setIsLogged,
-}: {
-  itemList: ItemInformation[] | undefined;
-  setItemList: React.Dispatch<
-    React.SetStateAction<ItemInformation[] | undefined>
-  >;
-  isLogged: boolean;
-  setIsLogged: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
-  const [text, setText] = useState<string>("");
+const Searchbar = ({ itemList, setItemList }: SearchbarProps) => {
+  const [text, setText] = useState('');
   const [itemCategory, setItemCategory] = useState<Option>({
-    label: "Любая категория",
-    value: "Любая категория",
+    label: 'Любая категория',
+    value: 'Любая категория',
   });
+
   const [itemType, setItemType] = useState<Option>({
-    label: "Любой тип",
-    value: "Любой тип",
+    label: 'Любой тип',
+    value: 'Любой тип',
   });
+
   const [searchResults, setSearchResults] = useState<JSX.Element[]>([]);
 
   const mapList = (list: ItemInformation[]) => {
     return list.map((item: ItemInformation) => {
       return (
         <li key={item.id}>
-          <Link onClick={() => setText("")} to={`/item/${String(item.id)}`}>
-            {highlightEnglishChars(item.marketName || item.marketHashName)}
+          <Link onClick={() => setText('')} to={`/item/${String(item.id)}`}>
+            {item.marketName || item.marketHashName}
           </Link>
         </li>
       );
@@ -49,15 +35,14 @@ const Searchbar = ({
 
   useEffect(() => {
     const fetchItems = async () => {
-      const data = await fetchWithErrorCheck("/api/items", setIsLogged);
+      const response = await fetch('/api/items');
+      const data: ItemInformation[] = await response.json();
 
-      if (!data) return;
-
-      const dataWithReplacedNulls = data.map((item: ItemInformation) => {
+      const dataWithReplacedNulls = data.map((item) => {
         item.itemCategory =
-          item.itemCategory === null ? "Без категории" : item.itemCategory;
+          item.itemCategory === null ? 'Без категории' : item.itemCategory;
         item.itemType =
-          item.itemType === null ? "Без категории" : item.itemType;
+          item.itemType === null ? 'Без категории' : item.itemType;
 
         return item;
       });
@@ -65,8 +50,8 @@ const Searchbar = ({
       setItemList(dataWithReplacedNulls);
     };
 
-    if (isLogged) fetchItems();
-  }, [isLogged, setIsLogged, setItemList]);
+    fetchItems();
+  }, [setItemList]);
 
   // filter by text input
   useEffect(() => {
@@ -81,19 +66,19 @@ const Searchbar = ({
   useEffect(() => {
     let list: ItemInformation[] = itemList!;
 
-    if (itemCategory.value !== "Любая категория") {
+    if (itemCategory.value !== 'Любая категория') {
       list = itemList!.filter((item: ItemInformation) => {
         return (
-          itemCategory.value === "Любая категория" ||
+          itemCategory.value === 'Любая категория' ||
           itemCategory.value === item.itemCategory
         );
       });
     }
 
-    if (itemType.value !== "Любой тип") {
+    if (itemType.value !== 'Любой тип') {
       list = itemList!.filter((item: ItemInformation) => {
         return (
-          itemType.value === "Любой тип" || itemType.value === item.itemType
+          itemType.value === 'Любой тип' || itemType.value === item.itemType
         );
       });
     }
@@ -101,32 +86,21 @@ const Searchbar = ({
     setSearchResults(mapList(list));
   }, [itemList, itemCategory, itemType, setSearchResults]);
 
-  // filter by type
-  // useEffect(() => {
-  //   const list = itemList!.filter((item: ItemInformation) => {
-  //     return itemType.value === "Любой тип" || item.itemType === itemType.value;
-  //   });
-
-  //   setSearchResults(mapList(list));
-  // }, [itemList, itemType, setSearchResults]);
-
-  if (!isLogged) return <Redirect push to="/login" />;
-
   return (
-    <div className="searchbar-container">
+    <div className='searchbar-container'>
       <DropdownButton
         itemList={itemList}
         itemCategory={itemCategory}
         setItemCategory={setItemCategory}
       />
 
-      <div className="searchbar">
+      <div className='searchbar'>
         <input
           onChange={(e) => setText(e.target.value)}
           value={text}
-          placeholder="Найти предмет"
+          placeholder='Найти предмет'
         />
-        <ul> {searchResults ? searchResults : "Предметы не были загружены"}</ul>
+        <ul> {searchResults ? searchResults : 'Предметы не были загружены'}</ul>
       </div>
       <DropdownButton
         itemList={itemList}

@@ -1,12 +1,13 @@
 .item {
-  margin: 20px 40px;
+  margin: 0 40px;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
 }
 
 .item h3 {
-  padding: 10px 0;
+  margin: 20px;
+  text-align: center;
 }
 
 .item input {

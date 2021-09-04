@@ -1,0 +1,170 @@
+ [
+    {
+      "appid": 730,
+      "id": 7,
+      "itemCategory": "Капсула",
+      "itemType": "MLG Columbus 2016",
+      "marketHashName": "Autograph Capsule | Astralis | MLG Columbus 2016",
+      "marketName": "Капсула с автографом | Astralis | MLG Columbus 2016"
+    },
+    {
+      "appid": 730,
+      "id": 5,
+      "itemCategory": "Капсула",
+      "itemType": "ELEAGUE Atlanta 2017",
+      "marketHashName": "Autograph Capsule | Astralis | Atlanta 2017",
+      "marketName": "Капсула с автографом | Astralis | Атланта 2017"
+    },
+    {
+      "appid": 730,
+      "id": 6,
+      "itemCategory": "Капсула",
+      "itemType": "ESL One Cologne 2016",
+      "marketHashName": "Autograph Capsule | Astralis | Cologne 2016",
+      "marketName": "Капсула с автографом | Astralis | Кёльн 2016"
+    },
+    {
+      "appid": 730,
+      "id": 12,
+      "itemCategory": "Капсула",
+      "itemType": "ESL One Cologne 2015",
+      "marketHashName": "Autograph Capsule | Cloud9 G2A | Cologne 2015",
+      "marketName": "Капсула с автографом | Cloud9 G2A | Кёльн 2015"
+    },
+    {
+      "appid": 730,
+      "id": 14,
+      "itemCategory": "Капсула",
+      "itemType": "MLG Columbus 2016",
+      "marketHashName": "Autograph Capsule | Cloud9 | MLG Columbus 2016",
+      "marketName": "Капсула с автографом | Cloud9 | MLG Columbus 2016"
+    },
+    {
+      "appid": 730,
+      "id": 13,
+      "itemCategory": "Капсула",
+      "itemType": "DreamHack Cluj-Napoca 2015",
+      "marketHashName": "Autograph Capsule | Cloud9 | Cluj-Napoca 2015",
+      "marketName": "Капсула с автографом | Cloud9 | Клуж-Напока 2015"
+    },
+    {
+      "appid": 730,
+      "id": 15,
+      "itemCategory": "Капсула",
+      "itemType": "DreamHack Cluj-Napoca 2015",
+      "marketHashName": "Autograph Capsule | Counter Logic Gaming | Cluj-Napoca 2015",
+      "marketName": "Капсула с автографом | Counter Logic Gaming | Клуж-Напока 2015"
+    },
+    {
+      "appid": 730,
+      "id": 11,
+      "itemCategory": "Капсула",
+      "itemType": "MLG Columbus 2016",
+      "marketHashName": "Autograph Capsule | Challengers (Foil) | MLG Columbus 2016",
+      "marketName": "Капсула с автографом | Претенденты (металлическая) | MLG Columbus 2016"
+    },
+    {
+      "appid": 730,
+      "id": 9,
+      "itemCategory": "Капсула",
+      "itemType": "DreamHack Cluj-Napoca 2015",
+      "marketHashName": "Autograph Capsule | Challengers (Foil) | Cluj-Napoca 2015",
+      "marketName": "Капсула с автографом | Претенденты (металлическая) | Клуж-Напока 2015"
+    },
+    {
+      "appid": 730,
+      "id": 10,
+      "itemCategory": "Капсула",
+      "itemType": "ESL One Cologne 2016",
+      "marketHashName": "Autograph Capsule | Challengers (Foil) | Cologne 2016",
+      "marketName": "Капсула с автографом | Претенденты (металлическая) | Кёльн 2016"
+    },
+    {
+      "appid": 730,
+      "id": 8,
+      "itemCategory": "Капсула",
+      "itemType": "ELEAGUE Atlanta 2017",
+      "marketHashName": "Autograph Capsule | Challengers (Foil) | Atlanta 2017",
+      "marketName": "Капсула с автографом | Претенденты (металлические) | Атланта 2017"
+    },
+    {
+      "appid": 730,
+      "id": 276,
+      "itemCategory": "Сувенирный набор",
+      "itemType": "ELEAGUE Atlanta 2017",
+      "marketHashName": "Atlanta 2017 Overpass Souvenir Package",
+      "marketName": "Сувенирный набор «ELEAGUE Atlanta 2017 Overpass»"
+    },
+    {
+      "appid": 730,
+      "id": 277,
+      "itemCategory": "Сувенирный набор",
+      "itemType": "ELEAGUE Atlanta 2017",
+      "marketHashName": "Atlanta 2017 Train Souvenir Package",
+      "marketName": "Сувенирный набор «ELEAGUE Atlanta 2017 Train»"
+    },
+    {
+      "appid": 730,
+      "id": 285,
+      "itemCategory": "Сувенирный набор",
+      "itemType": "FACEIT London 2018",
+      "marketHashName": "London 2018 Cache Souvenir Package",
+      "marketName": "Сувенирный набор «FACEIT London 2018 Cache»"
+    },
+    {
+      "appid": 730,
+      "id": 278,
+      "itemCategory": "Сувенирный набор",
+      "itemType": "PGL Krakow 2017",
+      "marketHashName": "Krakow 2017 Cache Souvenir Package",
+      "marketName": "Сувенирный набор «PGL Krakow 2017 Cache»"
+    },
+    {
+      "appid": 730,
+      "id": 279,
+      "itemCategory": "Сувенирный набор",
+      "itemType": "PGL Krakow 2017",
+      "marketHashName": "Krakow 2017 Cobblestone Souvenir Package",
+      "marketName": "Сувенирный набор «PGL Krakow 2017 Cobblestone»"
+    },
+    {
+      "appid": 730,
+      "id": 280,
+      "itemCategory": "Сувенирный набор",
+      "itemType": "PGL Krakow 2017",
+      "marketHashName": "Krakow 2017 Inferno Souvenir Package",
+      "marketName": "Сувенирный набор «PGL Krakow 2017 Inferno»"
+    },
+    {
+      "appid": 730,
+      "id": 281,
+      "itemCategory": "Сувенирный набор",
+      "itemType": "PGL Krakow 2017",
+      "marketHashName": "Krakow 2017 Mirage Souvenir Package",
+      "marketName": "Сувенирный набор «PGL Krakow 2017 Mirage»"
+    },
+    {
+      "appid": 730,
+      "id": 282,
+      "itemCategory": "Сувенирный набор",
+      "itemType": "PGL Krakow 2017",
+      "marketHashName": "Krakow 2017 Nuke Souvenir Package",
+      "marketName": "Сувенирный набор «PGL Krakow 2017 Nuke»"
+    },
+    {
+      "appid": 730,
+      "id": 283,
+      "itemCategory": "Сувенирный набор",
+      "itemType": "PGL Krakow 2017",
+      "marketHashName": "Krakow 2017 Overpass Souvenir Package",
+      "marketName": "Сувенирный набор «PGL Krakow 2017 Overpass»"
+    },
+    {
+      "appid": 730,
+      "id": 284,
+      "itemCategory": "Сувенирный набор",
+      "itemType": "PGL Krakow 2017",
+      "marketHashName": "Krakow 2017 Train Souvenir Package",
+      "marketName": "Сувенирный набор «PGL Krakow 2017 Train»"
+    }
+  ]

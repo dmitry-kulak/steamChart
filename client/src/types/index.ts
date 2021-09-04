@@ -1,3 +1,5 @@
+import { Option } from 'react-dropdown';
+
 export interface ItemInformation {
   appid: number;
   id: number;
@@ -8,15 +10,14 @@ export interface ItemInformation {
 }
 
 export interface FormValues {
-  currency?: string;
-  deals?: boolean;
-  lots?: boolean;
-  orders?: boolean;
-  players?: boolean;
-  twitchViewers?: boolean;
-  steamOnline?: boolean;
-  totalPlayers?: boolean;
-  id?: string;
+  currency: string;
+  deals: boolean;
+  lots: boolean;
+  orders: boolean;
+  players: boolean;
+  twitchViewers: boolean;
+  steamOnline: boolean;
+  totalPlayers: boolean;
   [key: string]: any;
 }
 
@@ -34,6 +35,7 @@ export interface ItemData {
   gameConcurrentTwitchViewers: number[];
   steamConcurrentInGame: number[];
   startDate: number | null;
+  [key: string]: any;
 }
 
 export interface ItemDataResponse extends ItemData {
@@ -42,13 +44,50 @@ export interface ItemDataResponse extends ItemData {
 
 export interface ChartProps {
   formData: FormValues;
-  isLogged: boolean;
   id: string;
-  setIsLogged: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface ChartState {
   itemData: ItemData;
   data: any;
-  options?: any;
+  options: any;
+}
+
+export interface SearchbarProps {
+  itemList: ItemInformation[] | undefined;
+  setItemList: React.Dispatch<
+    React.SetStateAction<ItemInformation[] | undefined>
+  >;
+}
+export interface ItemFormProps {
+  formData: FormValues;
+  setFormData: React.Dispatch<React.SetStateAction<FormValues>>;
+}
+
+export interface DropdownButtonProps {
+  itemList: ItemInformation[] | undefined;
+  itemCategory?: Option;
+  itemType?: Option;
+  setItemCategory?: any;
+  setItemType?: any;
+}
+
+export type Label =
+  | 'Цена ₽'
+  | 'Цена $'
+  | 'Количество сделок'
+  | 'Запросов на покупку'
+  | 'Лотов на продажу'
+  | 'Количество в игре'
+  | 'Общий онлайн Steam'
+  | 'Количество зрителей в Twitch'
+  | 'Общее количество играющих';
+
+export type yAxisID = 'y-axis-currency' | 'y-axis-steam' | 'y-axis-steamdb';
+export interface Series {
+  data: number[];
+  label: Label;
+  type: 'line';
+  borderColor: string;
+  yAxisID: yAxisID;
 }

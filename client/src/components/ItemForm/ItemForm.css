@@ -1,5 +1,6 @@
 form {
   display: flex;
+  justify-content: center;
 }
 
 form > div {
@@ -8,7 +9,8 @@ form > div {
   margin: 30px;
 }
 
-.item form label, .item form input {
+.item form label,
+.item form input {
   cursor: pointer;
 }
 
