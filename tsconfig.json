@@ -16,6 +16,5 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src"],
-  "ignore": ["Chart2.tsx"]
+  "include": ["src"]
 }

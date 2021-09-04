@@ -1,6 +1,5 @@
 import express from 'express';
 import fs from 'fs';
-import session from 'express-session';
 
 const itemsData = JSON.parse(fs.readFileSync('./data/itemsData.json', 'utf-8'));
 const itemsList = JSON.parse(fs.readFileSync('./data/itemsList.json', 'utf-8'));
