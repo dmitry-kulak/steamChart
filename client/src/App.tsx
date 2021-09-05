@@ -25,14 +25,14 @@ const App = () => {
           <Route
             exact
             path='/item/:id'
-            render={(props) => (
+            render={() => (
               <Item itemList={itemList as ItemInformation[]} />
             )}
           />
           <Route
             exact
             path='/'
-            render={(props) => (
+            render={() => (
               <div className='message'>Предмет не выбран.</div>
             )}
           />
