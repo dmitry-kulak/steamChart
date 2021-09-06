@@ -65,7 +65,6 @@ class Chart extends React.Component<ChartProps, ChartState> {
     let data = await response.json();
     const startDate = data.startDate;
     data = data.data;
-    console.log(data);
 
     const dates = data.map((item: ItemDataResponse) => item.date);
     const priceRub = data.map((item: ItemDataResponse) => item.priceRub);
