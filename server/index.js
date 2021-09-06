@@ -1,6 +1,8 @@
 const express = require('express')
 const fs = require('fs')
 const path = require('path')
+const compression = require('compression')
+
 
 const itemsData = JSON.parse(fs.readFileSync('./data/itemsData.json', 'utf-8'));
 const itemsList = JSON.parse(fs.readFileSync('./data/itemsList.json', 'utf-8'));
@@ -10,7 +12,9 @@ const app = express();
 const staticFiles = express.static(path.join(__dirname, '../client/build'))
 
 app.use(express.json());
+app.use(compression())
 app.use(staticFiles)
+
 
 app.get('/api/items', (req, res) => {
   return res.send(itemsList);
