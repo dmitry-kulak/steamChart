@@ -1,4 +1,5 @@
 import { Option } from 'react-dropdown';
+import React from "react";
 
 export interface ItemInformation {
   appid: number;
@@ -22,7 +23,7 @@ export interface FormValues {
 }
 
 export interface ItemData {
-  dates?: number[];
+  dates: number[];
   priceRub: number[];
   priceUsd: number[];
   dealsQty: number[];
@@ -38,8 +39,20 @@ export interface ItemData {
   [key: string]: any;
 }
 
-export interface ItemDataResponse extends ItemData {
+export interface ItemDataResponse {
   date: number;
+  priceRub: number;
+  priceUsd: number;
+  dealsQty: number;
+  ordersRub: number;
+  ordersUsd: number;
+  lotsRub: number;
+  lotsUsd: number;
+  gameConcurrentInGame: number;
+  steamConcurrentOnline: number;
+  gameConcurrentTwitchViewers: number;
+  steamConcurrentInGame: number;
+
 }
 
 export interface ChartProps {

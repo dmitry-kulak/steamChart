@@ -1,16 +1,15 @@
 import React from 'react';
-import { Line, Chart as Chartjs } from 'react-chartjs-2';
+import {Line, Chart as Chartjs} from 'react-chartjs-2';
 import 'chartjs-adapter-date-fns';
 
 import {
   ChartProps,
   ChartState,
   FormValues,
-  ItemData,
   ItemDataResponse,
   Series,
 } from '../../types';
-import { addSeries, chartOptions, colors } from '../../utils';
+import {addSeries, chartOptions, colors, extractItemDataFrom} from '../../utils';
 import zoomPlugin from 'chartjs-plugin-zoom';
 
 import './Chart.css';
@@ -63,51 +62,18 @@ class Chart extends React.Component<ChartProps, ChartState> {
   fetchData = async () => {
     const response = await fetch(`/api/chart/${this.props.id}`);
     let data = await response.json();
-    const startDate = data.startDate;
-    data = data.data;
-
-    const dates = data.map((item: ItemDataResponse) => item.date);
-    const priceRub = data.map((item: ItemDataResponse) => item.priceRub);
-    const priceUsd = data.map((item: ItemDataResponse) => item.priceUsd);
-    const dealsQty = data.map((item: ItemDataResponse) => item.dealsQty);
-    const ordersRub = data.map((item: ItemDataResponse) => item.ordersRub);
-    const ordersUsd = data.map((item: ItemDataResponse) => item.ordersUsd);
-    const lotsRub = data.map((item: ItemDataResponse) => item.lotsRub);
-    const lotsUsd = data.map((item: ItemDataResponse) => item.lotsUsd);
-    const gameConcurrentInGame = data.map(
-      (item: ItemData) => item.gameConcurrentInGame
-    );
-    const steamConcurrentOnline = data.map(
-      (item: ItemData) => item.steamConcurrentOnline
-    );
-    const gameConcurrentTwitchViewers = data.map(
-      (item: ItemData) => item.gameConcurrentTwitchViewers
-    );
-    const steamConcurrentInGame = data.map(
-      (item: ItemData) => item.steamConcurrentInGame
-    );
+    const startDate: number = data.startDate;
+    const responseData: ItemDataResponse[] = data.data;
 
     this.setState({
-      itemData: {
-        dates: dates,
-        priceRub: priceRub,
-        priceUsd: priceUsd,
-        dealsQty: dealsQty,
-        ordersRub: ordersRub,
-        ordersUsd: ordersUsd,
-        lotsRub: lotsRub,
-        lotsUsd: lotsUsd,
-        gameConcurrentInGame: gameConcurrentInGame,
-        steamConcurrentOnline: steamConcurrentOnline,
-        gameConcurrentTwitchViewers: gameConcurrentTwitchViewers,
-        steamConcurrentInGame: steamConcurrentInGame,
-        startDate: startDate,
-      },
+      itemData:
+        {...extractItemDataFrom(responseData), startDate}
+
     });
   };
 
   updateDealsSeries = (formData: FormValues) => {
-    const { currency, deals, orders, lots } = formData;
+    const {currency, deals, orders, lots} = formData;
     const newDeals: Series[] = [];
 
     const getCurrencyName = () => {
@@ -146,7 +112,7 @@ class Chart extends React.Component<ChartProps, ChartState> {
   };
 
   updateUsersSeries = (formData: FormValues) => {
-    const { players, steamOnline, twitchViewers, totalPlayers } = formData;
+    const {players, steamOnline, twitchViewers, totalPlayers} = formData;
     const newUsers: Series[] = [];
 
     const addIngame = addSeries(
@@ -198,7 +164,7 @@ class Chart extends React.Component<ChartProps, ChartState> {
     return newUsers;
   };
 
-  updateChart = async () => {
+  updateChart = () => {
     this.setState({
       data: {
         labels: this.state.itemData.dates,
@@ -211,7 +177,7 @@ class Chart extends React.Component<ChartProps, ChartState> {
   };
 
   render() {
-    return <Line options={this.state.options} data={this.state.data} />;
+    return <Line options={this.state.options} data={this.state.data}/>;
   }
 }
 

@@ -1,4 +1,4 @@
-import { Series, Label, yAxisID } from '../types';
+import {Series, Label, yAxisID, ItemDataResponse} from '../types';
 
 export const colors = {
   currency: '#6929c4',
@@ -22,7 +22,7 @@ export const chartOptions = {
   },
 
   scales: {
-    x: { type: 'time', ticks: { maxRotation: 0, autoSkipPadding: 10 } },
+    x: {type: 'time', ticks: {maxRotation: 0, autoSkipPadding: 10}},
     'y-axis-currency': {
       min: 0,
       position: 'right',
@@ -76,7 +76,7 @@ export const chartOptions = {
           enabled: true,
         },
       },
-      limits: { x: { max: new Date().getTime() } },
+      limits: {x: {max: new Date().getTime()}},
     },
   },
 };
@@ -118,3 +118,41 @@ export const addSeries = (
     });
   };
 };
+
+export const extractItemDataFrom = (responseData: ItemDataResponse[]) => {
+  const dates = responseData.map((item: ItemDataResponse) => item.date);
+  const priceRub = responseData.map((item: ItemDataResponse) => item.priceRub);
+  const priceUsd = responseData.map((item: ItemDataResponse) => item.priceUsd);
+  const dealsQty = responseData.map((item: ItemDataResponse) => item.dealsQty);
+  const ordersRub = responseData.map((item: ItemDataResponse) => item.ordersRub);
+  const ordersUsd = responseData.map((item: ItemDataResponse) => item.ordersUsd);
+  const lotsRub = responseData.map((item: ItemDataResponse) => item.lotsRub);
+  const lotsUsd = responseData.map((item: ItemDataResponse) => item.lotsUsd);
+  const gameConcurrentInGame = responseData.map(
+    (item: ItemDataResponse) => item.gameConcurrentInGame
+  );
+  const steamConcurrentOnline = responseData.map(
+    (item: ItemDataResponse) => item.steamConcurrentOnline
+  );
+  const gameConcurrentTwitchViewers = responseData.map(
+    (item: ItemDataResponse) => item.gameConcurrentTwitchViewers
+  );
+  const steamConcurrentInGame = responseData.map(
+    (item: ItemDataResponse) => item.steamConcurrentInGame
+  );
+
+  return {
+    dates,
+    priceRub,
+    priceUsd,
+    dealsQty,
+    ordersRub,
+    ordersUsd,
+    lotsRub,
+    lotsUsd,
+    gameConcurrentInGame,
+    gameConcurrentTwitchViewers,
+    steamConcurrentInGame,
+    steamConcurrentOnline
+  }
+}
